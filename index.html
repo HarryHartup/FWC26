@@ -456,116 +456,113 @@ function roundBadge(r){
 
 function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; return v; }
 
+// Format: [matchNum, date DD/MM/YYYY, venue, trigram, koIBC, round, teamA, teamB, kit, gfx, station, operator]
 const matches=[
-  ["M1","11/06/2026","Mexico City","CDMX","14:00","13:00","Group Stage","Mexico","South Africa","A","A","1"],
-  ["M2","11/06/2026","Guadalajara","GDL","21:00","20:00","Group Stage","Korea Republic","Czechia","B","B","2"],
-  ["M3","12/06/2026","Toronto","TOR","14:00","15:00","Group Stage","Canada","Bosnia & Herzegovina","A","A","1"],
-  ["M4","12/06/2026","Los Angeles","LA","20:00","18:00","Group Stage","USA","Paraguay","B","B","2"],
-  ["M5","13/06/2026","Boston","BOS","20:00","21:00","Group Stage","Haiti","Scotland","C","C","3"],
-  ["M6","13/06/2026","Vancouver","VAN","23:00","21:00","Group Stage","Australia","Türkiye","D","D","4"],
-  ["M7","13/06/2026","New York/New Jersey","NYNJ","17:00","18:00","Group Stage","Brazil","Morocco","B","B","2"],
-  ["M8","13/06/2026","San Francisco Bay Area","SFBA","14:00","12:00","Group Stage","Qatar","Switzerland","A","A","1"],
-  ["M9","14/06/2026","Philadelphia","PHL","18:00","19:00","Group Stage","Côte d'Ivoire","Ecuador","C","C","3"],
-  ["M10","14/06/2026","Houston","HOU","12:00","12:00","Group Stage","Germany","Curaçao","A","A","1"],
-  ["M11","14/06/2026","Dallas","DAL","15:00","15:00","Group Stage","Netherlands","Japan","B","B","2"],
-  ["M12","14/06/2026","Monterrey","MTY","21:00","20:00","Group Stage","Sweden","Tunisia","D","D","4"],
-  ["M13","15/06/2026","Miami","MIA","17:00","18:00","Group Stage","Saudi Arabia","Uruguay","C","C","3"],
-  ["M14","15/06/2026","Atlanta","ATL","11:00","12:00","Group Stage","Spain","Cabo Verde","A","A","1"],
-  ["M15","15/06/2026","Los Angeles","LA","20:00","18:00","Group Stage","IR Iran","New Zealand","D","D","4"],
-  ["M16","15/06/2026","Seattle","SEA","14:00","12:00","Group Stage","Belgium","Egypt","B","B","2"],
-  ["M17","16/06/2026","New York/New Jersey","NYNJ","14:00","15:00","Group Stage","France","Senegal","A","A","1"],
-  ["M18","16/06/2026","Boston","BOS","17:00","18:00","Group Stage","Iraq","Norway","B","B","2"],
-  ["M19","16/06/2026","Kansas City","KC","20:00","20:00","Group Stage","Argentina","Algeria","C","C","3"],
-  ["M20","16/06/2026","San Francisco Bay Area","SFBA","23:00","21:00","Group Stage","Austria","Jordan","D","D","4"],
-  ["M21","17/06/2026","Toronto","TOR","18:00","19:00","Group Stage","Ghana","Panama","C","C","3"],
-  ["M22","17/06/2026","Dallas","DAL","15:00","15:00","Group Stage","England","Croatia","B","B","2"],
-  ["M23","17/06/2026","Houston","HOU","12:00","12:00","Group Stage","Portugal","Congo DR","A","A","1"],
-  ["M24","17/06/2026","Mexico City","CDMX","21:00","20:00","Group Stage","Uzbekistan","Colombia","D","D","4"],
-  ["M25","18/06/2026","Atlanta","ATL","11:00","12:00","Group Stage","Czechia","South Africa","A","A","1"],
-  ["M26","18/06/2026","Los Angeles","LA","14:00","12:00","Group Stage","Switzerland","Bosnia & Herzegovina","B","B","2"],
-  ["M27","18/06/2026","Vancouver","VAN","17:00","15:00","Group Stage","Canada","Qatar","C","C","3"],
-  ["M28","18/06/2026","Guadalajara","GDL","20:00","19:00","Group Stage","Mexico","Korea Republic","D","D","4"],
-  ["M29","19/06/2026","Philadelphia","PHL","20:00","21:00","Group Stage","Brazil","Haiti","C","C","3"],
-  ["M30","19/06/2026","Boston","BOS","17:00","18:00","Group Stage","Scotland","Morocco","B","B","2"],
-  ["M31","19/06/2026","San Francisco Bay Area","SFBA","23:00","21:00","Group Stage","Türkiye","Paraguay","D","D","4"],
-  ["M32","19/06/2026","Seattle","SEA","14:00","12:00","Group Stage","USA","Australia","A","A","1"],
-  ["M33","20/06/2026","Toronto","TOR","15:00","16:00","Group Stage","Germany","Côte d'Ivoire","B","B","2"],
-  ["M34","20/06/2026","Kansas City","KC","19:00","19:00","Group Stage","Ecuador","Curaçao","C","C","3"],
-  ["M35","20/06/2026","Houston","HOU","12:00","12:00","Group Stage","Netherlands","Sweden","A","A","1"],
-  ["M36","20/06/2026","Monterrey","MTY","23:00","22:00","Group Stage","Tunisia","Japan","D","D","4"],
-  ["M37","21/06/2026","Miami","MIA","17:00","18:00","Group Stage","Uruguay","Cabo Verde","C","C","3"],
-  ["M38","21/06/2026","Atlanta","ATL","11:00","12:00","Group Stage","Spain","Saudi Arabia","A","A","1"],
-  ["M39","21/06/2026","Los Angeles","LA","14:00","12:00","Group Stage","Belgium","IR Iran","B","B","2"],
-  ["M40","21/06/2026","Vancouver","VAN","20:00","18:00","Group Stage","New Zealand","Egypt","D","D","4"],
-  ["M41","22/06/2026","New York/New Jersey","NYNJ","19:00","20:00","Group Stage","Norway","Senegal","C","C","3"],
-  ["M42","22/06/2026","Philadelphia","PHL","16:00","17:00","Group Stage","France","Iraq","B","B","2"],
-  ["M43","22/06/2026","Dallas","DAL","12:00","12:00","Group Stage","Argentina","Ghana","A","A","1"],
-  ["M44","22/06/2026","San Francisco Bay Area","SFBA","22:00","20:00","Group Stage","Jordan","Algeria","D","D","4"],
-  ["M45","23/06/2026","Boston","BOS","15:00","16:00","Group Stage","England","Panama","B","B","2"],
-  ["M46","23/06/2026","Toronto","TOR","18:00","19:00","Group Stage","Croatia","Portugal","C","C","3"],
-  ["M47","23/06/2026","Houston","HOU","12:00","12:00","Group Stage","Colombia","Congo DR","A","A","1"],
-  ["M48","23/06/2026","Guadalajara","GDL","21:00","20:00","Group Stage","Uzbekistan","Jordan","D","D","4"],
-  ["M49","24/06/2026","Miami","MIA","17:00","18:00","Group Stage","Scotland","Brazil","C","C","3"],
-  ["M50","24/06/2026","Atlanta","ATL","17:00","18:00","Group Stage","Morocco","Haiti","D","D","4"],
-  ["M51","24/06/2026","Vancouver","VAN","14:00","12:00","Group Stage","Switzerland","Canada","A","A","1"],
-  ["M52","24/06/2026","Seattle","SEA","14:00","12:00","Group Stage","Bosnia & Herzegovina","Qatar","B","B","2"],
-  ["M53","24/06/2026","Mexico City","CDMX","20:00","19:00","Group Stage","Czechia","Mexico","E","A","5"],
-  ["M54","24/06/2026","Monterrey","MTY","20:00","19:00","Group Stage","South Africa","Korea Republic","F","B","6"],
-  ["M55","25/06/2026","Philadelphia","PHL","15:00","16:00","Group Stage","Curaçao","Ecuador","A","A","1"],
-  ["M56","25/06/2026","New York/New Jersey","NYNJ","15:00","16:00","Group Stage","Japan","Sweden","B","B","2"],
-  ["M57","25/06/2026","Dallas","DAL","18:00","18:00","Group Stage","Tunisia","Netherlands","C","C","3"],
-  ["M58","25/06/2026","Kansas City","KC","18:00","18:00","Group Stage","Paraguay","Türkiye","D","D","4"],
-  ["M59","25/06/2026","Los Angeles","LA","21:00","19:00","Group Stage","USA","IR Iran","E","A","5"],
-  ["M60","25/06/2026","San Francisco Bay Area","SFBA","21:00","19:00","Group Stage","Australia","New Zealand","F","B","6"],
-  ["M61","26/06/2026","Boston","BOS","14:00","15:00","Group Stage","France","Argentina","A","A","1"],
-  ["M62","26/06/2026","Toronto","TOR","14:00","15:00","Group Stage","Iraq","Senegal","B","B","2"],
-  ["M63","26/06/2026","Seattle","SEA","22:00","20:00","Group Stage","Belgium","Saudi Arabia","E","A","5"],
-  ["M64","26/06/2026","Vancouver","VAN","22:00","20:00","Group Stage","Egypt","Spain","F","B","6"],
-  ["M65","26/06/2026","Houston","HOU","19:00","19:00","Group Stage","IR Iran","Austria","C","C","3"],
-  ["M66","26/06/2026","Guadalajara","GDL","19:00","18:00","Group Stage","Cabo Verde","Saudi Arabia","D","D","4"],
-  ["M67","27/06/2026","New York/New Jersey","NYNJ","16:00","17:00","Group Stage","England","Ghana","A","A","1"],
-  ["M68","27/06/2026","Philadelphia","PHL","16:00","17:00","Group Stage","Panama","Austria","B","B","2"],
-  ["M69","27/06/2026","Kansas City","KC","21:00","21:00","Group Stage","Algeria","Jordan","E","A","5"],
-  ["M70","27/06/2026","Dallas","DAL","21:00","21:00","Group Stage","Colombia","Uzbekistan","F","B","6"],
-  ["M71","27/06/2026","Miami","MIA","18:30","19:30","Group Stage","Croatia","Congo DR","C","C","3"],
-  ["M72","27/06/2026","Atlanta","ATL","18:30","19:30","Group Stage","Portugal","Panama","D","D","4"],
-  ["M73","28/06/2026","Los Angeles","LA","14:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M74","29/06/2026","Boston","BOS","15:30","16:30","Round of 32","TBC","TBC","","",""],
-  ["M75","29/06/2026","Monterrey","MTY","20:00","19:00","Round of 32","TBC","TBC","","",""],
-  ["M76","29/06/2026","Houston","HOU","12:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M77","30/06/2026","New York/New Jersey","NYNJ","16:00","17:00","Round of 32","TBC","TBC","","",""],
-  ["M78","30/06/2026","Dallas","DAL","12:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M79","30/06/2026","Mexico City","CDMX","20:00","19:00","Round of 32","TBC","TBC","","",""],
-  ["M80","01/07/2026","Atlanta","ATL","11:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M81","01/07/2026","San Francisco Bay Area","SFBA","19:00","17:00","Round of 32","TBC","TBC","","",""],
-  ["M82","01/07/2026","Seattle","SEA","15:00","13:00","Round of 32","TBC","TBC","","",""],
-  ["M83","02/07/2026","Toronto","TOR","18:00","19:00","Round of 32","TBC","TBC","","",""],
-  ["M84","02/07/2026","Los Angeles","LA","14:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M85","02/07/2026","Vancouver","VAN","22:00","20:00","Round of 32","TBC","TBC","","",""],
-  ["M86","03/07/2026","Miami","MIA","17:00","18:00","Round of 32","TBC","TBC","","",""],
-  ["M87","03/07/2026","Kansas City","KC","20:30","20:30","Round of 32","TBC","TBC","","",""],
-  ["M88","03/07/2026","Dallas","DAL","13:00","13:00","Round of 32","TBC","TBC","","",""],
-  ["M89","04/07/2026","Philadelphia","PHL","16:00","17:00","Round of 32","TBC","TBC","","",""],
-  ["M90","04/07/2026","Houston","HOU","12:00","12:00","Round of 32","TBC","TBC","","",""],
-  ["M91","05/07/2026","New York/New Jersey","NYNJ","19:00","20:00","Round of 16","TBC","TBC","","",""],
-  ["M92","05/07/2026","Mexico City","CDMX","15:00","14:00","Round of 16","TBC","TBC","","",""],
-  ["M93","06/07/2026","Dallas","DAL","19:00","19:00","Round of 16","TBC","TBC","","",""],
-  ["M94","06/07/2026","Seattle","SEA","14:00","14:00","Round of 16","TBC","TBC","","",""],
-  ["M95","07/07/2026","Vancouver","VAN","16:00","17:00","Round of 16","TBC","TBC","","",""],
-  ["M96","07/07/2026","Boston","BOS","13:00","14:00","Round of 16","TBC","TBC","","",""],
-  ["M97","09/07/2026","Los Angeles","LA","15:00","16:00","Round of 16","TBC","TBC","","",""],
-  ["M98","10/07/2026","Miami","MIA","14:00","15:00","Round of 16","TBC","TBC","","",""],
-  ["M99","11/07/2026","Kansas City","KC","16:00","17:00","Quarterfinals","TBC","TBC","","",""],
-  ["M100","11/07/2026","Dallas","DAL","20:00","20:00","Quarterfinals","TBC","TBC","","",""],
-  ["M101","14/07/2026","Atlanta","ATL","14:00","14:00","Quarterfinals","TBC","TBC","","",""],
-  ["M102","15/07/2026","Miami","MIA","14:00","15:00","Quarterfinals","TBC","TBC","","",""],
-  ["M103","18/07/2026","New York/New Jersey","NYNJ","16:00","17:00","Semifinal","TBC","TBC","","",""],
-  ["M104","19/07/2026","Dallas","DAL","14:00","14:00","Third Place Playoff","TBC","TBC","","",""],
-  ["M105","19/07/2026","Atlanta","ATL","14:00","14:00","Final","TBC","TBC","","",""],
+  ["M1","11/06/2026","Mexico City","CDMX","14:00","Group Stage","Mexico","South Africa","A","A","1","Alex Hithersay"],
+  ["M2","11/06/2026","Guadalajara","GDL","21:00","Group Stage","Korea Republic","Czechia","B","B","2","Jake Jones"],
+  ["M3","12/06/2026","Toronto","TOR","14:00","Group Stage","Canada","Bosnia & Herzegovina","A","A","1","Alex Hithersay"],
+  ["M4","12/06/2026","Los Angeles","LA","20:00","Group Stage","USA","Paraguay","B","B","2","Harry Hartup"],
+  ["M5","13/06/2026","San Francisco Bay Area","SFBA","14:00","Group Stage","Qatar","Switzerland","A","A","1","Alex Hithersay"],
+  ["M6","13/06/2026","New York/New Jersey","NYNJ","17:00","Group Stage","Brazil","Morocco","B","B","2","Alex Hithersay"],
+  ["M7","13/06/2026","Boston","BOS","20:00","Group Stage","Haiti","Scotland","C","C","3","Harry Hartup"],
+  ["M8","13/06/2026","Vancouver","VAN","23:00","Group Stage","Australia","Türkiye","D","D","1","Jake Jones"],
+  ["M9","14/06/2026","Houston","HOU","12:00","Group Stage","Germany","Curaçao","A","A","1","Alex Hithersay"],
+  ["M10","14/06/2026","Dallas","DAL","15:00","Group Stage","Netherlands","Japan","B","B","2","Alex Hithersay"],
+  ["M11","14/06/2026","Philadelphia","PHL","18:00","Group Stage","Côte d'Ivoire","Ecuador","C","C","3","Jake Jones"],
+  ["M12","14/06/2026","Monterrey","MTY","21:00","Group Stage","Sweden","Tunisia","D","D","1","Jake Jones"],
+  ["M13","15/06/2026","Atlanta","ATL","11:00","Group Stage","Spain","Cabo Verde","A","A","1","Harry Hartup"],
+  ["M14","15/06/2026","Seattle","SEA","14:00","Group Stage","Belgium","Egypt","B","B","2","Harry Hartup"],
+  ["M15","15/06/2026","Miami","MIA","17:00","Group Stage","Saudi Arabia","Uruguay","C","C","3","Jake Jones"],
+  ["M16","15/06/2026","Los Angeles","LA","20:00","Group Stage","IR Iran","New Zealand","D","D","1","Jake Jones"],
+  ["M17","16/06/2026","New York/New Jersey","NYNJ","14:00","Group Stage","France","Senegal","A","A","1","Jake Jones"],
+  ["M18","16/06/2026","Boston","BOS","17:00","Group Stage","Iraq","Norway","B","B","2","Jake Jones"],
+  ["M19","16/06/2026","Kansas City","KC","20:00","Group Stage","Argentina","Algeria","C","C","3","Alex Hithersay"],
+  ["M20","16/06/2026","San Francisco Bay Area","SFBA","23:00","Group Stage","Austria","Jordan","D","D","1","Alex Hithersay"],
+  ["M21","17/06/2026","Houston","HOU","12:00","Group Stage","Portugal","Congo DR","A","A","1","Harry Hartup"],
+  ["M22","17/06/2026","Dallas","DAL","15:00","Group Stage","England","Croatia","B","B","2","Alex Hithersay"],
+  ["M23","17/06/2026","Toronto","TOR","18:00","Group Stage","Ghana","Panama","C","C","3","Harry Hartup"],
+  ["M24","17/06/2026","Mexico City","CDMX","21:00","Group Stage","Uzbekistan","Colombia","D","D","1","Alex Hithersay"],
+  ["M25","18/06/2026","Atlanta","ATL","11:00","Group Stage","Czechia","South Africa","A","A","1","Jake Jones"],
+  ["M26","18/06/2026","Los Angeles","LA","14:00","Group Stage","Switzerland","Bosnia & Herzegovina","B","B","2","Jake Jones"],
+  ["M27","18/06/2026","Vancouver","VAN","17:00","Group Stage","Canada","Qatar","C","C","3","Harry Hartup"],
+  ["M28","18/06/2026","Guadalajara","GDL","20:00","Group Stage","Mexico","Korea Republic","D","D","1","Harry Hartup"],
+  ["M29","19/06/2026","Seattle","SEA","14:00","Group Stage","USA","Australia","A","A","1","Alex Hithersay"],
+  ["M30","19/06/2026","Boston","BOS","17:00","Group Stage","Scotland","Morocco","B","B","2","Alex Hithersay"],
+  ["M31","19/06/2026","Philadelphia","PHL","20:00","Group Stage","Brazil","Haiti","C","C","3","Jake Jones"],
+  ["M32","19/06/2026","San Francisco Bay Area","SFBA","23:00","Group Stage","Türkiye","Paraguay","D","D","1","Jake Jones"],
+  ["M33","20/06/2026","Houston","HOU","12:00","Group Stage","Netherlands","Sweden","A","A","1","Harry Hartup"],
+  ["M34","20/06/2026","Toronto","TOR","15:00","Group Stage","Germany","Côte d'Ivoire","B","B","2","Harry Hartup"],
+  ["M35","20/06/2026","Kansas City","KC","19:00","Group Stage","Ecuador","Curaçao","C","C","3","Alex Hithersay"],
+  ["M36","20/06/2026","Monterrey","MTY","23:00","Group Stage","Tunisia","Japan","D","D","1","Alex Hithersay"],
+  ["M37","21/06/2026","Atlanta","ATL","11:00","Group Stage","Spain","Saudi Arabia","A","A","1","Jake Jones"],
+  ["M38","21/06/2026","Los Angeles","LA","14:00","Group Stage","Belgium","IR Iran","B","B","2","Jake Jones"],
+  ["M39","21/06/2026","Miami","MIA","17:00","Group Stage","Uruguay","Cabo Verde","C","C","3","Harry Hartup"],
+  ["M40","21/06/2026","Vancouver","VAN","20:00","Group Stage","New Zealand","Egypt","D","D","1","Harry Hartup"],
+  ["M41","22/06/2026","Dallas","DAL","12:00","Group Stage","Argentina","Austria","A","A","1","Alex Hithersay"],
+  ["M42","22/06/2026","Philadelphia","PHL","16:00","Group Stage","France","Iraq","B","B","2","Alex Hithersay"],
+  ["M43","22/06/2026","New York/New Jersey","NYNJ","19:00","Group Stage","Norway","Senegal","C","C","3","Jake Jones"],
+  ["M44","22/06/2026","San Francisco Bay Area","SFBA","22:00","Group Stage","Jordan","Algeria","D","D","1","Jake Jones"],
+  ["M45","23/06/2026","Houston","HOU","12:00","Group Stage","Portugal","Uzbekistan","A","A","1","Harry Hartup"],
+  ["M46","23/06/2026","Boston","BOS","15:00","Group Stage","England","Ghana","B","B","2","Harry Hartup"],
+  ["M47","23/06/2026","Toronto","TOR","18:00","Group Stage","Panama","Croatia","C","C","3","Alex Hithersay"],
+  ["M48","23/06/2026","Guadalajara","GDL","21:00","Group Stage","Colombia","Congo DR","D","D","1","Alex Hithersay"],
+  ["M49","24/06/2026","Vancouver","VAN","14:00","Group Stage","Switzerland","Canada","A","A","1","Alex Hithersay"],
+  ["M50","24/06/2026","Seattle","SEA","14:00","Group Stage","Bosnia & Herzegovina","Qatar","B","B","2","Harry Hartup"],
+  ["M51","24/06/2026","Miami","MIA","17:00","Group Stage","Scotland","Brazil","C","C","3","Alex Hithersay"],
+  ["M52","24/06/2026","Atlanta","ATL","17:00","Group Stage","Morocco","Haiti","D","D","1","Jake Jones"],
+  ["M53","24/06/2026","Mexico City","CDMX","20:00","Group Stage","Czechia","Mexico","E","A","2","Harry Hartup"],
+  ["M54","24/06/2026","Monterrey","MTY","20:00","Group Stage","South Africa","Korea Republic","F","B","3","Jake Jones"],
+  ["M55","25/06/2026","Philadelphia","PHL","15:00","Group Stage","Curaçao","Côte d'Ivoire","A","A","1","Harry Hartup"],
+  ["M56","25/06/2026","New York/New Jersey","NYNJ","15:00","Group Stage","Ecuador","Germany","B","B","2","Jake Jones"],
+  ["M57","25/06/2026","Dallas","DAL","18:00","Group Stage","Japan","Sweden","C","C","3","Harry Hartup"],
+  ["M58","25/06/2026","Kansas City","KC","18:00","Group Stage","Tunisia","Netherlands","D","D","1","Alex Hithersay"],
+  ["M59","25/06/2026","Los Angeles","LA","21:00","Group Stage","Türkiye","USA","E","A","2","Alex Hithersay"],
+  ["M60","25/06/2026","San Francisco Bay Area","SFBA","21:00","Group Stage","Paraguay","Australia","F","B","3","Jake Jones"],
+  ["M61","26/06/2026","Boston","BOS","14:00","Group Stage","Norway","France","A","A","1","Alex Hithersay"],
+  ["M62","26/06/2026","Toronto","TOR","14:00","Group Stage","Senegal","Iraq","B","B","2","Harry Hartup"],
+  ["M63","26/06/2026","Houston","HOU","19:00","Group Stage","Cabo Verde","Saudi Arabia","C","C","3","Jake Jones"],
+  ["M64","26/06/2026","Guadalajara","GDL","19:00","Group Stage","Uruguay","Spain","D","D","1","Alex Hithersay"],
+  ["M65","26/06/2026","Seattle","SEA","22:00","Group Stage","Egypt","IR Iran","E","A","2","Harry Hartup"],
+  ["M66","26/06/2026","Vancouver","VAN","22:00","Group Stage","New Zealand","Belgium","F","B","3","Jake Jones"],
+  ["M67","27/06/2026","New York/New Jersey","NYNJ","16:00","Group Stage","Panama","England","A","A","1","Jake Jones"],
+  ["M68","27/06/2026","Philadelphia","PHL","16:00","Group Stage","Croatia","Ghana","B","B","2","Harry Hartup"],
+  ["M69","27/06/2026","Miami","MIA","18:30","Group Stage","Colombia","Portugal","C","C","3","Alex Hithersay"],
+  ["M70","27/06/2026","Atlanta","ATL","18:30","Group Stage","Congo DR","Uzbekistan","D","D","1","Jake Jones"],
+  ["M71","27/06/2026","Kansas City","KC","21:00","Group Stage","Algeria","Austria","E","A","2","Harry Hartup"],
+  ["M72","27/06/2026","Dallas","DAL","21:00","Group Stage","Jordan","Argentina","F","B","3","Alex Hithersay"],
+  ["M73","28/06/2026","Los Angeles","LA","14:00","Round of 32","TBC","TBC","A","A","1","Jake Jones"],
+  ["M74","29/06/2026","Houston","HOU","12:00","Round of 32","TBC","TBC","A","A","",""],
+  ["M75","29/06/2026","Boston","BOS","15:30","Round of 32","TBC","TBC","B","B","",""],
+  ["M76","29/06/2026","Monterrey","MTY","20:00","Round of 32","TBC","TBC","C","C","",""],
+  ["M77","30/06/2026","Dallas","DAL","12:00","Round of 32","TBC","TBC","A","A","",""],
+  ["M78","30/06/2026","New York/New Jersey","NYNJ","16:00","Round of 32","TBC","TBC","B","B","",""],
+  ["M79","30/06/2026","Mexico City","CDMX","20:00","Round of 32","TBC","TBC","C","C","",""],
+  ["M80","01/07/2026","Atlanta","ATL","11:00","Round of 32","TBC","TBC","A","A","",""],
+  ["M81","01/07/2026","Seattle","SEA","15:00","Round of 32","TBC","TBC","B","B","",""],
+  ["M82","01/07/2026","San Francisco Bay Area","SFBA","19:00","Round of 32","TBC","TBC","C","C","",""],
+  ["M83","02/07/2026","Los Angeles","LA","14:00","Round of 32","TBC","TBC","A","A","",""],
+  ["M84","02/07/2026","Toronto","TOR","18:00","Round of 32","TBC","TBC","B","B","",""],
+  ["M85","02/07/2026","Vancouver","VAN","22:00","Round of 32","TBC","TBC","C","C","",""],
+  ["M86","03/07/2026","Dallas","DAL","13:00","Round of 32","TBC","TBC","A","A","",""],
+  ["M87","03/07/2026","Miami","MIA","17:00","Round of 32","TBC","TBC","B","B","",""],
+  ["M88","03/07/2026","Kansas City","KC","20:30","Round of 32","TBC","TBC","C","C","",""],
+  ["M89","04/07/2026","Houston","HOU","12:00","Round of 16","TBC","TBC","A","A","",""],
+  ["M90","04/07/2026","Philadelphia","PHL","16:00","Round of 16","TBC","TBC","B","B","",""],
+  ["M91","05/07/2026","New York/New Jersey","NYNJ","15:00","Round of 16","TBC","TBC","A","A","",""],
+  ["M92","05/07/2026","Mexico City","CDMX","19:00","Round of 16","TBC","TBC","B","B","",""],
+  ["M93","06/07/2026","Dallas","DAL","14:00","Round of 16","TBC","TBC","A","A","",""],
+  ["M94","06/07/2026","Seattle","SEA","19:00","Round of 16","TBC","TBC","B","B","",""],
+  ["M95","07/07/2026","Atlanta","ATL","11:00","Round of 16","TBC","TBC","A","A","",""],
+  ["M96","07/07/2026","Vancouver","VAN","15:00","Round of 16","TBC","TBC","B","B","",""],
+  ["M97","09/07/2026","Boston","BOS","15:00","Quarterfinals","TBC","TBC","A","A","",""],
+  ["M98","10/07/2026","Los Angeles","LA","14:00","Quarterfinals","TBC","TBC","A","A","",""],
+  ["M99","11/07/2026","Miami","MIA","16:00","Quarterfinals","TBC","TBC","A","A","",""],
+  ["M100","11/07/2026","Kansas City","KC","20:00","Quarterfinals","TBC","TBC","B","B","",""],
+  ["M101","14/07/2026","Dallas","DAL","14:00","Semifinal","TBC","TBC","A","A","",""],
+  ["M102","15/07/2026","Atlanta","ATL","14:00","Semifinal","TBC","TBC","A","A","",""],
+  ["M103","18/07/2026","Miami","MIA","16:00","Third Place Playoff","TBC","TBC","A","A","","Harry Hartup"],
+  ["M104","19/07/2026","New York/New Jersey","NYNJ","14:00","Final","TBC","TBC","A","A","","Alex Hithersay"],
 ];
-
-const OPERATORS=["Alex Hithersay","Jake Jones","Alex Hithersay","Harry Hartup","Alex Hithersay","Alex Hithersay","Harry Hartup","Jake Jones","Alex Hithersay","Alex Hithersay","Jake Jones","Jake Jones","Harry Hartup","Harry Hartup","Jake Jones","Jake Jones","Jake Jones","Jake Jones","Alex Hithersay","Alex Hithersay","Harry Hartup","Alex Hithersay","Harry Hartup","Alex Hithersay","Jake Jones","Jake Jones","Harry Hartup","Harry Hartup","Alex Hithersay","Alex Hithersay","Jake Jones","Jake Jones","Harry Hartup","Harry Hartup","Alex Hithersay","Alex Hithersay","Jake Jones","Jake Jones","Harry Hartup","Harry Hartup","Alex Hithersay","Alex Hithersay","Jake Jones","Jake Jones","Harry Hartup","Harry Hartup","Alex Hithersay","Alex Hithersay","Alex Hithersay","Harry Hartup","Alex Hithersay","Jake Jones","Harry Hartup","Jake Jones","Harry Hartup","Jake Jones","Harry Hartup","Alex Hithersay","Alex Hithersay","Jake Jones","Alex Hithersay","Harry Hartup","Jake Jones","Alex Hithersay","Harry Hartup","Jake Jones","Jake Jones","Harry Hartup","Alex Hithersay","Jake Jones","Harry Hartup","Alex Hithersay","Jake Jones"];
-const STATIONS=[1,2,1,2,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1];
 
 function opCell(name){
   if(!name) return '<span class="dash">-</span>';
@@ -595,25 +592,22 @@ function buildTable(data){
   document.getElementById('recordCount').textContent=data.length+' matches';
   document.getElementById('showingCount').textContent=data.length;
   tbody.innerHTML=data.map((m)=>{
-    const [num,date,venue,tgm,koIBC,koLocal,round,teamA,teamB,contrib,distrib,vor]=m;
-    const origIdx=matchData.indexOf(m);
-    const op=OPERATORS[origIdx]||'';
-    const stn=STATIONS[origIdx]||'';
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator]=m;
     return `<tr>
       <td><span class="match-num">${num}</span></td>
       <td><span class="date-cell">${val(date)}</span></td>
       <td><span class="venue-cell">${val(venue)}</span></td>
       <td><span class="trigram">${val(tgm)}</span></td>
       <td><span class="time-cell">${val(koIBC)}</span></td>
-      <td><span class="time-cell" style="color:var(--muted)">${val(koLocal)}</span></td>
+      <td><span class="time-cell" style="color:var(--muted)">-</span></td>
       <td>${roundBadge(round)}</td>
       <td>${teamChip(teamA,true)}</td>
       <td>${teamChip(teamB,false)}</td>
-      <td><span class="contrib-cell">${contrib||'-'}</span></td>
-      <td><span class="contrib-cell">${distrib||'-'}</span></td>
-      <td>${opCell(op)}</td>
-      <td>${stationCell(stn)}</td>
-      <td><span class="contrib-cell">${vor||'-'}</span></td>
+      <td><span class="contrib-cell">${kit||'-'}</span></td>
+      <td><span class="contrib-cell">${gfx||'-'}</span></td>
+      <td>${opCell(operator)}</td>
+      <td>${stationCell(station)}</td>
+      <td><span class="dash">-</span></td>
       <td><span class="dash">-</span></td>
       <td><span class="dash">-</span></td>
       <td><span class="dash">-</span></td>
@@ -685,12 +679,12 @@ function applyFilters(){
   const venue=document.getElementById('venueFilter').value;
   const date=document.getElementById('dateFilter').value;
   const op=document.getElementById('opFilter').value;
-  filteredData=matchData.filter((m,i)=>{
-    const [num,dt,vn,tgm,koIBC,koLocal,rd,tA,tB]=m;
+  filteredData=matchData.filter((m)=>{
+    const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,operator]=m;
     if(round&&rd!==round)return false;
     if(venue&&vn!==venue)return false;
     if(date&&dt!==date)return false;
-    if(op&&OPERATORS[i]!==op)return false;
+    if(op&&operator!==op)return false;
     if(search){const s=[num,dt,vn,tgm,koIBC,rd,tA,tB].join(' ').toLowerCase();if(!s.includes(search))return false;}
     return true;
   });
@@ -722,8 +716,8 @@ function switchTab(name,el){
 }
 
 function updateStats(){
-  const gs=matchData.filter(m=>m[6]==='Group Stage').length;
-  const ko=matchData.filter(m=>m[6]!=='Group Stage').length;
+  const gs=matchData.filter(m=>m[5]==='Group Stage').length;
+  const ko=matchData.filter(m=>m[5]!=='Group Stage').length;
   document.getElementById('gsCount').textContent=gs;
   document.getElementById('koCount').textContent=ko;
   document.getElementById('totalMatches').textContent=matchData.length;
