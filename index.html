@@ -128,71 +128,98 @@
   .op-jake  { background:rgba(0,61,165,0.22);  color:#7EB8FF; border:1px solid rgba(0,61,165,0.4); }
   .op-harry { background:rgba(123,45,139,0.22);color:#CC88E8; border:1px solid rgba(123,45,139,0.4); }
 
-  /* COLOURS PAGE — accordion list */
+  /* COLOURS PAGE */
   .colours-panel { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
   .colours-header { padding:14px 20px; border-bottom:1px solid var(--border); background:var(--panel); display:flex; align-items:center; gap:12px; }
   .colours-list { display:flex; flex-direction:column; }
-
   .colour-row { border-bottom:1px solid var(--border); }
   .colour-row:last-child { border-bottom:none; }
-
-  .colour-row-title {
-    display:flex; align-items:center; gap:14px;
-    padding:14px 20px; cursor:pointer;
-    transition:background 0.15s;
-    user-select:none;
-  }
+  .colour-row-title { display:flex; align-items:center; gap:14px; padding:14px 20px; cursor:pointer; transition:background 0.15s; user-select:none; }
   .colour-row-title:hover { background:var(--dark3); }
-
-  .colour-row-name {
-    font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px;
-    letter-spacing:1px; color:var(--text); flex:1;
-  }
+  .colour-row-name { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; letter-spacing:1px; color:var(--text); flex:1; }
   .colour-row-preview { display:flex; gap:3px; }
   .preview-dot { width:12px; height:12px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); flex-shrink:0; }
-  .colour-chevron {
-    font-size:12px; color:var(--muted); transition:transform 0.2s; flex-shrink:0;
-    font-family:'Barlow Condensed',sans-serif;
-  }
+  .colour-chevron { font-size:12px; color:var(--muted); transition:transform 0.2s; flex-shrink:0; font-family:'Barlow Condensed',sans-serif; }
   .colour-row.open .colour-chevron { transform:rotate(180deg); }
-
-  .colour-row-body {
-    display:none; padding:0 20px 16px 20px;
-    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-    gap:10px;
-  }
+  .colour-row-body { display:none; padding:0 20px 16px 20px; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap:10px; }
   .colour-row.open .colour-row-body { display:grid; }
-
-  .kit-entry {
-    display:flex; align-items:center; gap:10px;
-    padding:8px 12px; border-radius:6px;
-    background:var(--panel); border:1px solid var(--border);
-  }
-  .kit-swatch-block {
-    width:36px; height:36px; border-radius:5px;
-    border:1px solid rgba(255,255,255,0.12);
-    flex-shrink:0; cursor:pointer; transition:all 0.18s;
-    display:flex; align-items:center; justify-content:center;
-    font-size:9px; font-weight:700; letter-spacing:0.5px;
-  }
+  .kit-entry { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:6px; background:var(--panel); border:1px solid var(--border); }
+  .kit-swatch-block { width:36px; height:36px; border-radius:5px; border:1px solid rgba(255,255,255,0.12); flex-shrink:0; cursor:pointer; transition:all 0.18s; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; letter-spacing:0.5px; }
   .kit-swatch-block:hover { transform:scale(1.1); border-color:rgba(255,255,255,0.35); }
   .kit-entry-info { display:flex; flex-direction:column; gap:3px; flex:1; min-width:0; }
   .kit-entry-label { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
-  .kit-entry-hex {
-    font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700;
-    color:var(--text); cursor:pointer; transition:color 0.15s;
-  }
+  .kit-entry-hex { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700; color:var(--text); cursor:pointer; transition:color 0.15s; }
   .kit-entry-hex:hover { color:var(--fifa-gold); }
   .kit-entry-hex.missing { color:var(--muted); font-style:italic; font-size:12px; }
-
   .legend-row { display:flex; gap:16px; flex-wrap:wrap; align-items:center; padding:12px 20px; border-top:1px solid var(--border); background:var(--dark2); }
   .legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); }
 
-  .footer { margin-top:24px; padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); position:relative; }
-  .easter-egg { position:absolute; bottom:6px; left:50%; transform:translateX(-50%); width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); cursor:pointer; transition:all 0.3s; text-decoration:none; display:block; }
-  .easter-egg:hover { background:rgba(245,166,35,0.15); border-color:rgba(245,166,35,0.3); box-shadow:0 0 8px rgba(245,166,35,0.2); }
+  /* NEXT 3 GLOBAL STRIP */
+  .next3-strip {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .next3-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+  }
+  .next3-header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 12px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .next3-pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--fifa-gold);
+    animation: livePulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .next3-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .next3-item {
+    padding: 12px 20px;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .next3-item:last-child { border-right: none; }
+  .next3-item-top {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .next3-match-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900; font-size: 13px; color: var(--fifa-gold);
+    min-width: 28px;
+  }
+  .next3-teams {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 16px; color: var(--text);
+    flex: 1;
+  }
+  .next3-item-meta {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 11px; color: var(--muted);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 0.5px;
+  }
+  .next3-stn-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .next3-empty {
+    padding: 18px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; color: var(--muted); letter-spacing: 1px;
+    grid-column: 1/-1;
+  }
 
-  /* STATION NEXT-UP PANEL */
+  /* STATION PANEL */
   .station-panel { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
   .station-card { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
   .station-card-header { display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid var(--border); }
@@ -224,11 +251,65 @@
   .countdown-live { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:26px; color:#FF6B6B; letter-spacing:2px; animation:livePulse 1.5s ease-in-out infinite; }
   .station-op { margin-top:10px; display:flex; align-items:center; gap:6px; }
   .station-idle-msg { padding:20px 14px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:14px; color:var(--muted); letter-spacing:1px; }
+  /* ONE next match per station */
+  .station-next-list { border-top:1px solid var(--border); padding:8px 14px 10px; }
+  .station-next-title { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .station-next-item { display:flex; align-items:center; gap:8px; padding:5px 0; }
+  .station-next-num { font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:900; color:var(--fifa-gold); min-width:28px; }
+  .station-next-teams { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:600; color:var(--text); flex:1; }
+  .station-next-time { font-family:'Barlow Condensed',sans-serif; font-size:12px; color:var(--muted); white-space:nowrap; }
+
+  /* SYNC VALUES TAB */
+  .sync-panel { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .sync-header { padding:14px 20px; border-bottom:1px solid var(--border); background:var(--panel); display:flex; align-items:center; gap:12px; }
+  .sync-table { width:100%; border-collapse:collapse; font-size:13px; }
+  .sync-table thead th {
+    background:#0C1022; color:var(--muted);
+    font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700;
+    letter-spacing:2px; text-transform:uppercase;
+    padding:10px 20px; text-align:left;
+    border-bottom:2px solid var(--border);
+  }
+  .sync-table th:first-child { min-width:200px; }
+  .sync-table th:not(:first-child) { min-width:180px; }
+  .sync-table tbody td {
+    padding:11px 20px;
+    border-bottom:1px solid rgba(255,255,255,0.04);
+    vertical-align:middle;
+  }
+  .sync-table tbody tr:last-child td { border-bottom:none; }
+  .sync-table tbody tr:hover td { background:rgba(255,255,255,0.025); }
+  .sync-venue-name {
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700; font-size:16px; color:var(--text);
+    letter-spacing:0.5px;
+  }
+  .sync-trigram {
+    font-family:'Barlow Condensed',sans-serif; font-weight:700;
+    font-size:11px; letter-spacing:1px; color:#fff;
+    background:var(--panel); padding:2px 7px; border-radius:3px;
+    border:1px solid var(--border); margin-left:8px;
+    vertical-align:middle;
+  }
+  .sync-value-missing {
+    color:var(--muted);
+    font-style:italic;
+    font-size:12px;
+    font-family:'Barlow',sans-serif;
+  }
+  .sync-col-main  { border-left:2px solid rgba(255,107,0,0.3); }
+  .sync-col-backup { border-left:2px solid rgba(91,158,255,0.3); }
+  .sync-col-uni   { border-left:2px solid rgba(61,224,144,0.3); }
+  .sync-col-header-main   { color:#FF6B00 !important; }
+  .sync-col-header-backup { color:#5B9EFF !important; }
+  .sync-col-header-uni    { color:#3DE090 !important; }
 
   .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
   .empty-state .big { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:rgba(255,255,255,0.05); margin-bottom:12px; }
-
   .header-accent { height:2px; background:linear-gradient(90deg,transparent,#E50011,#FFD100,#009A44,#003DA5,#7B2D8B,transparent); }
+  .footer { margin-top:24px; padding:16px 24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); position:relative; }
+  .easter-egg { position:absolute; bottom:6px; left:50%; transform:translateX(-50%); width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); cursor:pointer; transition:all 0.3s; text-decoration:none; display:block; }
+  .easter-egg:hover { background:rgba(245,166,35,0.15); border-color:rgba(245,166,35,0.3); box-shadow:0 0 8px rgba(245,166,35,0.2); }
 
   ::-webkit-scrollbar { width:6px; height:6px; }
   ::-webkit-scrollbar-track { background:var(--dark); }
@@ -267,6 +348,7 @@
 <div class="tabs">
   <button class="tab active" onclick="switchTab('matches',this)">Match Schedule</button>
   <button class="tab" onclick="switchTab('colours',this)">Team Colours</button>
+  <button class="tab" onclick="switchTab('sync',this)">Sync Values</button>
 </div>
 
 <div class="filters" id="matchFilters">
@@ -309,11 +391,24 @@
 
 <div class="main">
   <div id="matchesTab" class="tab-content active">
+
+    <!-- NEXT 3 GLOBAL STRIP -->
+    <div class="next3-strip">
+      <div class="next3-header">
+        <div class="next3-pulse"></div>
+        <div class="next3-header-title">Next 3 Matches — All Stations</div>
+      </div>
+      <div class="next3-items" id="next3Items"></div>
+    </div>
+
+    <!-- STATION CARDS -->
     <div class="station-panel" id="stationPanel">
       <div class="station-card stn-1" id="stnCard1"></div>
       <div class="station-card stn-2" id="stnCard2"></div>
       <div class="station-card stn-3" id="stnCard3"></div>
     </div>
+
+    <!-- MATCH TABLE -->
     <div class="table-wrapper">
       <div class="table-header-row">
         <div class="table-title">Match Schedule</div>
@@ -335,6 +430,7 @@
             <th>GFX</th>
             <th>HawkVR Op</th>
             <th>Station</th>
+            <th>Sync Time</th>
             <th>Tracking Sup</th>
           </tr>
         </thead>
@@ -359,6 +455,28 @@
         <div class="record-count">48 nations — click team to expand</div>
       </div>
       <div class="colours-list" id="coloursList"></div>
+    </div>
+  </div>
+
+  <div id="syncTab" class="tab-content">
+    <div class="sync-panel">
+      <div class="sync-header">
+        <div class="table-title">Sync Values</div>
+        <div class="record-count">16 venues</div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="sync-table">
+          <thead>
+            <tr>
+              <th>Venue</th>
+              <th class="sync-col-main sync-col-header-main">Main</th>
+              <th class="sync-col-backup sync-col-header-backup">Backup</th>
+              <th class="sync-col-uni sync-col-header-uni">UNI</th>
+            </tr>
+          </thead>
+          <tbody id="syncBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
@@ -422,6 +540,26 @@ const TC = {
   "Uruguay":        {home:"#55B5E5",away:"#0B1B3D",gkHome:"#29a678",gkAway:"#fbfa89"},
   "Uzbekistan":     {home:"#0072CE",away:"#FFFFFF",gkHome:"#e32042",gkAway:"#029b64"}
 };
+
+// Venue data for Sync Values tab — trigram and sync values (all missing for now)
+const VENUES_SYNC = [
+  { name:"Atlanta",              tgm:"ATL" },
+  { name:"Boston",               tgm:"BOS" },
+  { name:"Dallas",               tgm:"DAL" },
+  { name:"Guadalajara",          tgm:"GDL" },
+  { name:"Houston",              tgm:"HOU" },
+  { name:"Kansas City",          tgm:"KC"  },
+  { name:"Los Angeles",          tgm:"LA"  },
+  { name:"Mexico City",          tgm:"CDMX"},
+  { name:"Miami",                tgm:"MIA" },
+  { name:"Monterrey",            tgm:"MTY" },
+  { name:"New York/New Jersey",  tgm:"NYNJ"},
+  { name:"Philadelphia",         tgm:"PHL" },
+  { name:"San Francisco Bay Area",tgm:"SFBA"},
+  { name:"Seattle",              tgm:"SEA" },
+  { name:"Toronto",              tgm:"TOR" },
+  { name:"Vancouver",            tgm:"VAN" },
+];
 
 function luminance(hex){
   if(!hex||hex==='MISSING') return 0;
@@ -491,7 +629,6 @@ function roundBadge(r){
 
 function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; return v; }
 
-// Format: [matchNum, date DD/MM/YYYY, venue, trigram, koIBC, round, teamA, teamB, kit, gfx, station, operator]
 const matches=[
   ["M1","11/06/2026","Mexico City","CDMX","14:00","Group Stage","Mexico","South Africa","A","A","1","Alex Hithersay"],
   ["M2","11/06/2026","Guadalajara","GDL","21:00","Group Stage","Korea Republic","Czechia","B","B","2","Jake Jones"],
@@ -612,7 +749,6 @@ function stationCell(n){
   return `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:${c};">${n}</span>`;
 }
 
-// IBC = CDT (UTC-5). Offsets below are hours relative to IBC/CDT.
 const VENUE_IBC_OFFSET = {
   "Houston":0,"Dallas":0,"Kansas City":0,"Monterrey":0,
   "New York/New Jersey":1,"Boston":1,"Philadelphia":1,"Miami":1,"Atlanta":1,"Toronto":1,
@@ -626,6 +762,15 @@ function localKOFromIBC(venue, koIBC){
   const [hh, mm] = koIBC.split(':').map(Number);
   const totalMins = hh * 60 + mm + offset * 60;
   const newH = ((totalMins / 60 | 0) + 24) % 24;
+  const newM = ((totalMins % 60) + 60) % 60;
+  return String(newH).padStart(2,'0') + ':' + String(newM).padStart(2,'0');
+}
+
+function syncTimeFromIBC(koIBC){
+  if(!koIBC || koIBC==='-') return '-';
+  const [hh, mm] = koIBC.split(':').map(Number);
+  const totalMins = hh * 60 + mm - 195;
+  const newH = ((Math.floor(totalMins / 60) % 24) + 24) % 24;
   const newM = ((totalMins % 60) + 60) % 60;
   return String(newH).padStart(2,'0') + ':' + String(newM).padStart(2,'0');
 }
@@ -644,7 +789,7 @@ function buildTable(data){
   }
   document.getElementById('recordCount').textContent=data.length+' matches';
   document.getElementById('showingCount').textContent=data.length;
-  tbody.innerHTML=data.map((m,_,arr)=>{
+  tbody.innerHTML=data.map((m)=>{
     const origIdx=matchData.indexOf(m);
     const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator]=m;
     const koLocal = koIBC && koIBC !== '-' ? localKOFromIBC(venue, koIBC) : '-';
@@ -662,6 +807,7 @@ function buildTable(data){
       <td><span class="contrib-cell">${gfx||'-'}</span></td>
       <td>${opCell(operator)}</td>
       <td>${stationCell(station)}</td>
+      <td><span class="time-cell">${syncTimeFromIBC(koIBC)}</span></td>
       <td><span class="contrib-cell">${origIdx >= 92 ? 'Dom Radford' : '-'}</span></td>
     </tr>`;
   }).join('');
@@ -670,7 +816,6 @@ function buildTable(data){
 function buildColours(){
   const list=document.getElementById('coloursList');
   const teams=Object.keys(TC).sort((a,b)=>a.localeCompare(b));
-
   list.innerHTML=teams.map(t=>{
     const d=TC[t];
     const kits=[
@@ -683,10 +828,8 @@ function buildColours(){
       const bg = k.colour==='MISSING' ? 'rgba(255,255,255,0.1)' : k.colour;
       return `<div class="preview-dot" style="background:${bg};"></div>`;
     }).join('');
-
     const kitEntries=kits.map(k=>{
       const isMissing=k.colour==='MISSING';
-      const bg=isMissing?'rgba(255,255,255,0.05)':k.colour;
       const swatchStyle=isMissing?`background:rgba(255,255,255,0.05);border-style:dashed;`:`background:${k.colour};`;
       const swatchContent=isMissing?'<span style="color:var(--muted);font-size:8px;">?</span>':'';
       const hexEl=isMissing
@@ -700,7 +843,6 @@ function buildColours(){
         </div>
       </div>`;
     }).join('');
-
     return `<div class="colour-row" id="cr-${t.replace(/[^a-z0-9]/gi,'_')}">
       <div class="colour-row-title" onclick="toggleColour(this)">
         <div class="colour-row-preview">${previewDots}</div>
@@ -710,6 +852,22 @@ function buildColours(){
       <div class="colour-row-body">${kitEntries}</div>
     </div>`;
   }).join('');
+}
+
+function buildSync(){
+  const tbody = document.getElementById('syncBody');
+  const missing = `<span class="sync-value-missing">missing</span>`;
+  tbody.innerHTML = VENUES_SYNC.map(v => `
+    <tr>
+      <td>
+        <span class="sync-venue-name">${v.name}</span>
+        <span class="sync-trigram">${v.tgm}</span>
+      </td>
+      <td class="sync-col-main">${missing}</td>
+      <td class="sync-col-backup">${missing}</td>
+      <td class="sync-col-uni">${missing}</td>
+    </tr>
+  `).join('');
 }
 
 function toggleColour(titleEl){
@@ -776,32 +934,20 @@ function updateStats(){
   document.getElementById('showingCount').textContent=matchData.length;
 }
 
-// ── STATION NEXT-UP PANEL ──────────────────────────────────────────────────
+// ── STATION PANEL ──────────────────────────────────────────────────────────
 
-// IBC = CDT = UTC-5. parseIBCDate converts an IBC time to UTC ms.
 function parseIBCDate(ddmmyyyy, hhmm){
   const [d,m,y]=ddmmyyyy.split('/').map(Number);
   const [hh,mm]=hhmm.split(':').map(Number);
-  // CDT = UTC-5, so UTC = IBC + 5h
   return Date.UTC(y, m-1, d, hh+5, mm, 0);
-}
-
-function localKOStr(venue, ibcKOTime){
-  // ibcKOTime is "HH:MM" string — apply IBC-relative offset
-  return localKOFromIBC(venue, ibcKOTime);
-}
-
-function getStationMatches(stn){
-  return matchData.filter(m => String(m[10]) === String(stn) && m[5] !== 'TBC');
 }
 
 function getActiveMatch(stn, nowMs){
   const stMatches = matchData.filter(m => String(m[10]) === String(stn));
-  // Find current or next
   for(const m of stMatches){
     if(!m[1]||!m[4]) continue;
     const koMs = parseIBCDate(m[1], m[4]);
-    const endMs = koMs + 2*60*60*1000; // +2h
+    const endMs = koMs + 2*60*60*1000;
     if(nowMs >= koMs && nowMs < endMs) return {m, state:'live', koMs};
     if(nowMs < koMs) return {m, state:'upcoming', koMs};
   }
@@ -844,7 +990,6 @@ function renderCountdown(koMs, nowMs, state){
 function renderStationCard(stn, cardEl){
   const nowMs = Date.now();
   const active = getActiveMatch(stn, nowMs);
-  const stnColors = {1:'#FF6B00', 2:'#5B9EFF', 3:'#3DE090'};
 
   if(!active){
     cardEl.innerHTML = `
@@ -858,12 +1003,29 @@ function renderStationCard(stn, cardEl){
 
   const {m, state, koMs} = active;
   const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
-  const localTime = localKOStr(venue, koIBC);
+  const localTime = localKOFromIBC(venue, koIBC);
   const statusCls = state==='live' ? 'status-live' : 'status-upcoming';
   const statusLbl = state==='live' ? '● Live' : 'Up Next';
-
   const opFirst = operator ? operator.split(' ')[0] : '';
   const opCls = opFirst==='Alex'?'op-alex':opFirst==='Jake'?'op-jake':opFirst?'op-harry':'';
+
+  // ONE next match after current on this station
+  const allStn = matchData.filter(mx => String(mx[10]) === String(stn));
+  const currentIdx = allStn.indexOf(m);
+  const nextMatches = allStn.slice(currentIdx + 1, currentIdx + 2); // only 1
+  const nextHtml = nextMatches.length ? `
+    <div class="station-next-list">
+      <div class="station-next-title">Next on Station ${stn}</div>
+      ${nextMatches.map(nx=>{
+        const [nNum,,nVenue,,nKO,nRound,nA,nB] = nx;
+        const teamStr = nA==='TBC'&&nB==='TBC' ? 'TBC' : `${nA} vs ${nB}`;
+        return `<div class="station-next-item">
+          <span class="station-next-num">${nNum}</span>
+          <span class="station-next-teams">${teamStr}</span>
+          <span class="station-next-time">${nKO} IBC</span>
+        </div>`;
+      }).join('')}
+    </div>` : '';
 
   cardEl.innerHTML = `
     <div class="station-card-header">
@@ -897,19 +1059,91 @@ function renderStationCard(stn, cardEl){
       </div>
       ${renderCountdown(koMs, nowMs, state)}
       ${operator ? `<div class="station-op"><span class="op-pill ${opCls}">${operator}</span></div>` : ''}
-    </div>`;
+    </div>
+    ${nextHtml}`;
 }
+
+// ── NEXT 3 GLOBAL STRIP ────────────────────────────────────────────────────
+
+function renderNext3Global(){
+  const nowMs = Date.now();
+  const container = document.getElementById('next3Items');
+
+  // Gather the next upcoming match per station, then sort by KO time, take first 3
+  const stnColors = {1:'#FF6B00', 2:'#5B9EFF', 3:'#3DE090'};
+  const candidates = [];
+
+  // Look at ALL matches with a station assigned, find those upcoming
+  for(const m of matchData){
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+    if(!station || !date || !koIBC) continue;
+    const koMs = parseIBCDate(date, koIBC);
+    const endMs = koMs + 2*60*60*1000;
+    if(nowMs < endMs){ // upcoming or live
+      candidates.push({m, koMs, state: nowMs >= koMs ? 'live' : 'upcoming'});
+    }
+  }
+
+  // Sort by KO time ascending, take first 3
+  candidates.sort((a,b) => a.koMs - b.koMs);
+  const top3 = candidates.slice(0,3);
+
+  if(!top3.length){
+    container.innerHTML = `<div class="next3-empty">No upcoming matches scheduled.</div>`;
+    return;
+  }
+
+  container.innerHTML = top3.map(({m, koMs, state}) => {
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+    const stnNum = parseInt(station);
+    const dotColor = stnColors[stnNum] || '#888';
+    const teamStr = teamA==='TBC'&&teamB==='TBC' ? 'TBC vs TBC' : `${teamA} vs ${teamB}`;
+    const isLive = state === 'live';
+    const diff = Math.max(0, koMs - nowMs);
+    const totalMins = Math.floor(diff/60000);
+    const h = Math.floor(totalMins/60);
+    const min = totalMins % 60;
+    let timeStr;
+    if(isLive){
+      timeStr = `<span style="color:#FF6B6B;font-weight:700;animation:livePulse 1.5s ease-in-out infinite;display:inline-block;">● LIVE</span>`;
+    } else if(h >= 24){
+      const days = Math.floor(h/24);
+      timeStr = `in ${days}d ${h%24}h`;
+    } else if(h > 0){
+      timeStr = `in ${h}h ${min}m`;
+    } else {
+      timeStr = `in ${min}m`;
+    }
+    return `<div class="next3-item">
+      <div class="next3-item-top">
+        <span class="next3-match-num">${num}</span>
+        <span class="next3-teams">${teamStr}</span>
+      </div>
+      <div class="next3-item-meta">
+        <div class="next3-stn-dot" style="background:${dotColor};"></div>
+        <span>Stn ${station}</span>
+        <span>·</span>
+        <span>${venue}</span>
+        <span>·</span>
+        <span>${koIBC} IBC</span>
+        <span>·</span>
+        <span>${timeStr}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── END PANELS ─────────────────────────────────────────────────────────────
 
 function updateStationPanel(){
   renderStationCard(1, document.getElementById('stnCard1'));
   renderStationCard(2, document.getElementById('stnCard2'));
   renderStationCard(3, document.getElementById('stnCard3'));
+  renderNext3Global();
 }
 
-// ── END STATION PANEL ──────────────────────────────────────────────────────
-
 document.getElementById('footerDate').textContent='Updated '+new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-populateFilters(); buildTable(matchData); buildColours(); updateStats();
+populateFilters(); buildTable(matchData); buildColours(); buildSync(); updateStats();
 updateStationPanel();
 setInterval(updateStationPanel, 1000);
 </script>
