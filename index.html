@@ -110,6 +110,8 @@
   .round-sf    { background:rgba(245,166,35,0.2); color:#FFD580; border:1px solid rgba(245,166,35,0.4); }
   .round-f     { background:rgba(245,166,35,0.35);color:var(--fifa-gold); border:1px solid var(--fifa-gold); }
   .round-3p    { background:rgba(180,180,180,0.12);color:#C0C0C0; border:1px solid rgba(180,180,180,0.25); }
+  .round-svm   { background:rgba(180,180,100,0.18); color:#E8E060; border:1px solid rgba(180,180,100,0.35); }
+
 
   .team-chip { display:inline-flex; align-items:center; gap:8px; padding:4px 10px 4px 5px; border-radius:20px; border:1px solid transparent; cursor:pointer; transition:all 0.18s; position:relative; min-width:140px; }
   .team-chip:hover { border-color:rgba(255,255,255,0.2); filter:brightness(1.15); transform:translateY(-1px); }
@@ -491,6 +493,7 @@
       <option>Semifinal</option>
       <option>Third Place Playoff</option>
       <option>Final</option>
+      <option>Stadium Validation</option>
     </select>
   </div>
   <div class="filter-group">
@@ -581,6 +584,7 @@
         <span class="legend-item"><span class="round-badge round-qf">QF</span> Quarterfinals</span>
         <span class="legend-item"><span class="round-badge round-sf">SF</span> Semifinal</span>
         <span class="legend-item"><span class="round-badge round-f">F</span> Final</span>
+        <span class="legend-item"><span class="round-badge round-svm">SVM</span> Stadium Validation</span>
         <span style="margin-left:auto;font-size:11px;color:var(--muted)">Click any team chip to copy name • Hover hex to copy colour</span>
       </div>
     </div>
@@ -622,6 +626,7 @@
         <span class="legend-item"><span class="round-badge round-qf">QF</span> Quarterfinals</span>
         <span class="legend-item"><span class="round-badge round-sf">SF</span> Semifinal</span>
         <span class="legend-item"><span class="round-badge round-f">F</span> Final</span>
+        <span class="legend-item"><span class="round-badge round-svm">SVM</span> Stadium Validation</span>
         <span style="margin-left:auto;font-size:11px;color:var(--muted)">Complete unfiltered schedule</span>
       </div>
     </div>
@@ -845,7 +850,7 @@ function teamChip(name, isHome){
 }
 
 function roundBadge(r){
-  const m={'Group Stage':['round-group','GRP'],'Round of 32':['round-r32','R32'],'Round of 16':['round-r16','R16'],'Quarterfinals':['round-qf','QF'],'Semifinal':['round-sf','SF'],'Third Place Playoff':['round-3p','3RD'],'Final':['round-f','FINAL']};
+  const m={'Group Stage':['round-group','GRP'],'Round of 32':['round-r32','R32'],'Round of 16':['round-r16','R16'],'Quarterfinals':['round-qf','QF'],'Semifinal':['round-sf','SF'],'Third Place Playoff':['round-3p','3RD'],'Final':['round-f','FINAL'],'Stadium Validation':['round-svm','SVM']};
   const [cls,lbl]=m[r]||['round-group',r];
   return `<span class="round-badge ${cls}">${lbl}</span>`;
 }
@@ -853,6 +858,15 @@ function roundBadge(r){
 function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; return v; }
 
 const matches=[
+  ["SVM1","08/06/2026","Mexico City","CDMX","19:00","Stadium Validation","Mexico","South Africa","A","A","",""],
+  ["SVM2","09/06/2026","Guadalajara","GDL","15:00","Stadium Validation","Korea Republic","Czechia","A","A","",""],
+  ["SVM3","09/06/2026","Los Angeles","LA","19:00","Stadium Validation","USA","Paraguay","B","B","",""],
+  ["SVM4","10/06/2026","Toronto","TOR","11:00","Stadium Validation","Canada","Bosnia & Herzegovina","C","C","",""],
+  ["SVM5","10/06/2026","Boston","BOS","15:00","Stadium Validation","Qatar","Switzerland","D","D","",""],
+  ["SVM6","10/06/2026","San Francisco Bay Area","SFBA","19:00","Stadium Validation","Australia","Türkiye","E","E","",""],
+  ["SVM7","11/06/2026","New York/New Jersey","NYNJ","11:00","Stadium Validation","Haiti","Scotland","C","C","",""],
+  ["SVM8","11/06/2026","Philadelphia","PHL","13:00","Stadium Validation","Germany","Curaçao","D","D","",""],
+  ["SVM9","11/06/2026","Vancouver","VAN","15:00","Stadium Validation","Brazil","Morocco","E","E","",""],
   ["M1","11/06/2026","Mexico City","CDMX","14:00","Group Stage","Mexico","South Africa","A","A","1","Alex Hithersay"],
   ["M2","11/06/2026","Guadalajara","GDL","21:00","Group Stage","Korea Republic","Czechia","B","B","2","Jake Jones"],
   ["M3","12/06/2026","Toronto","TOR","14:00","Group Stage","Canada","Bosnia & Herzegovina","A","A","1","Alex Hithersay"],
@@ -1143,6 +1157,7 @@ function applyFilters(){
   filteredData=matchData.filter((m)=>{
     const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,operator]=m;
     if(hideCompleted && isMatchCompleted(m)) return false;
+    if(rd==='Stadium Validation' && round!=='Stadium Validation') return false;
     if(round&&rd!==round)return false;
     if(venue&&vn!==venue)return false;
     if(date&&dt!==date)return false;
@@ -1329,7 +1344,7 @@ function buildIPs(){
 
 function updateStats(){
   const gs=matchData.filter(m=>m[5]==='Group Stage').length;
-  const ko=matchData.filter(m=>m[5]!=='Group Stage').length;
+  const ko=matchData.filter(m=>m[5]!=='Group Stage'&&m[5]!=='Stadium Validation').length;
   document.getElementById('gsCount').textContent=gs;
   document.getElementById('koCount').textContent=ko;
   document.getElementById('totalMatches').textContent=matchData.length;
@@ -1475,10 +1490,10 @@ function renderNext3Global(){
   const stnColors = {1:'#FF6B00', 2:'#5B9EFF', 3:'#3DE090'};
   const candidates = [];
 
-  // Look at ALL matches with a station assigned, find those upcoming
+  // Look at ALL matches with a date+time, find those upcoming
   for(const m of matchData){
     const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
-    if(!station || !date || !koIBC) continue;
+    if(!date || !koIBC) continue;
     const koMs = parseIBCDate(date, koIBC);
     const endMs = koMs + 2*60*60*1000;
     if(nowMs < endMs){ // upcoming or live
@@ -1497,8 +1512,11 @@ function renderNext3Global(){
 
   container.innerHTML = top3.map(({m, koMs, state}) => {
     const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+    const isSVM = round === 'Stadium Validation';
     const stnNum = parseInt(station);
-    const dotColor = stnColors[stnNum] || '#888';
+    const stnColors = {1:'#FF6B00', 2:'#5B9EFF', 3:'#3DE090'};
+    const dotColor = stnColors[stnNum] || '#E8E060';
+    const stnLabel = station ? `Stn ${station}` : `<span class="round-badge round-svm" style="font-size:10px;padding:2px 6px;">SVM</span>`;
     const teamStr = teamA==='TBC'&&teamB==='TBC' ? 'TBC vs TBC' : `${teamA} vs ${teamB}`;
     const isLive = state === 'live';
     const diff = Math.max(0, koMs - nowMs);
@@ -1527,7 +1545,7 @@ function renderNext3Global(){
       </div>
       <div class="next3-item-meta">
         <div class="next3-stn-dot" style="background:${dotColor};"></div>
-        <span>Stn ${station}</span>
+        <span>${stnLabel}</span>
         <span>·</span>
         <span>${venue}</span>
         <span>·</span>
@@ -1597,7 +1615,7 @@ function renderKitPanel(){
     return `<div class="kit-cell">
       <div class="kit-cell-letter">${letter}</div>
       <div class="kit-cell-label">Kit ${letter}</div>
-      <div class="kit-cell-match">${num}</div>
+      <div class="kit-cell-match">${num} ${round==='Stadium Validation'?'<span class="round-badge round-svm" style="font-size:9px;padding:1px 5px;vertical-align:middle;">SVM</span>':''}</div>
       <div class="kit-cell-teams">${teamLines}</div>
       <div class="kit-cell-meta">
         <span>${koIBC} IBC · ${timeStr}</span>
