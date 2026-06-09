@@ -649,7 +649,7 @@
               <th>Venue</th>
               <th class="sync-col-main sync-col-header-main">PGM</th>
               <th class="sync-col-backup sync-col-header-backup">Replay</th>
-              <th class="sync-col-uni sync-col-header-uni">EPTS</th>
+              <th class="sync-col-uni sync-col-header-uni">Player tracking offset</th>
               <th class="sync-col-audio sync-col-header-audio">Audio Sync</th>
             </tr>
           </thead>
@@ -1100,13 +1100,13 @@ function buildSync(){
   const missing = `<span class="sync-value-missing">missing</span>`;
   const audioMissing = `<span class="sync-value-missing">missing</span>`;
   tbody.innerHTML = VENUES_SYNC.map(v => {
-    let pgm, replay, epts;
+    let pgm, replay, Player tracking offset;
     if(v.name === 'Guadalajara'){
       pgm    = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">19</span>`;
       replay = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">16</span>`;
-      epts   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#FF6B6B;">-192</span>`;
+      Player tracking offset   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:#FF6B6B;">-192</span>`;
     } else {
-      pgm = missing; replay = missing; epts = missing;
+      pgm = missing; replay = missing; Player tracking offset = missing;
     }
     return `<tr>
       <td>
@@ -1115,7 +1115,7 @@ function buildSync(){
       </td>
       <td class="sync-col-main">${pgm}</td>
       <td class="sync-col-backup">${replay}</td>
-      <td class="sync-col-uni">${epts}</td>
+      <td class="sync-col-uni">${Player tracking offset}</td>
       <td class="sync-col-audio">${audioMissing}</td>
     </tr>`;
   }).join('');
