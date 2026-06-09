@@ -1123,9 +1123,7 @@ function buildSync(){
       replay = syncVal(16);
       epts   = syncVal(192);
       audio  = syncVal(19);
-
-  tbody.innerHTML = VENUES_SYNC.map(v => {
-    let pgm, replay, epts, audio;
+      
     if(v.name === 'Miami '){
       pgm    = syncVal(69);
       replay = syncVal(69);
