@@ -859,14 +859,14 @@ function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; ret
 // SVM station assignments: cycling 1→2→3 (SVM1=1, SVM2=2, SVM3=3, SVM4=1, ...)
 const matches=[
   ["SVM1","08/06/2026","Mexico City","CDMX","19:00","Stadium Validation","Mexico","South Africa","A","A","1",""],
-  ["SVM2","09/06/2026","Guadalajara","GDL","15:00","Stadium Validation","Korea Republic","Czechia","A","A","2",""],
-  ["SVM3","09/06/2026","Los Angeles","LA","19:00","Stadium Validation","USA","Paraguay","B","B","3",""],
-  ["SVM4","10/06/2026","Toronto","TOR","11:00","Stadium Validation","Canada","Bosnia & Herzegovina","C","C","1",""],
-  ["SVM5","10/06/2026","Boston","BOS","15:00","Stadium Validation","Qatar","Switzerland","D","D","2",""],
-  ["SVM6","10/06/2026","San Francisco Bay Area","SFBA","19:00","Stadium Validation","Australia","Türkiye","E","E","3",""],
-  ["SVM7","11/06/2026","New York/New Jersey","NYNJ","11:00","Stadium Validation","Haiti","Scotland","C","C","1",""],
-  ["SVM8","11/06/2026","Philadelphia","PHL","13:00","Stadium Validation","Germany","Curaçao","D","D","2",""],
-  ["SVM9","11/06/2026","Vancouver","VAN","15:00","Stadium Validation","Brazil","Morocco","E","E","3",""],
+  ["SVM2","09/06/2026","Guadalajara","GDL","15:00","Stadium Validation","Korea Republic","Czechia","A","A","1",""],
+  ["SVM3","09/06/2026","Los Angeles","LA","19:00","Stadium Validation","USA","Paraguay","B","B","2",""],
+  ["SVM4","10/06/2026","Toronto","TOR","11:00","Stadium Validation","Canada","Bosnia & Herzegovina","C","C","3",""],
+  ["SVM5","10/06/2026","Boston","BOS","15:00","Stadium Validation","Qatar","Switzerland","D","D","1",""],
+  ["SVM6","10/06/2026","San Francisco Bay Area","SFBA","19:00","Stadium Validation","Australia","Türkiye","E","E","2",""],
+  ["SVM7","11/06/2026","New York/New Jersey","NYNJ","11:00","Stadium Validation","Haiti","Scotland","C","C","3",""],
+  ["SVM8","11/06/2026","Philadelphia","PHL","13:00","Stadium Validation","Germany","Curaçao","D","D","1",""],
+  ["SVM9","11/06/2026","Vancouver","VAN","15:00","Stadium Validation","Brazil","Morocco","E","E","2",""],
   ["SVM10","12/06/2026","Seattle","SEA","16:00","Stadium Validation","IR Iran","New Zealand","F","F","3",""],
   ["M1","11/06/2026","Mexico City","CDMX","14:00","Group Stage","Mexico","South Africa","A","A","1","Alex Hithersay"],
   ["M2","11/06/2026","Guadalajara","GDL","21:00","Group Stage","Korea Republic","Czechia","B","B","2","Jake Jones"],
@@ -1127,17 +1127,17 @@ function buildSync(){
       epts   = syncVal(192);
       audio  = syncVal(19);
 
-    } else if (v.name === 'Miami') {
-      pgm    = syncVal(69);
-      replay = syncVal(69);
-      epts   = syncVal(69);
-      audio  = syncVal(69);
+    } else if (v.name === 'Los Angeles') {
+      pgm    = syncVal();
+      replay = syncVal();
+      epts   = syncVal();
+      audio  = syncVal();
 
     } else {
-      pgm = missing;
-      replay = missing;
-      epts = missing;
-      audio = missing;
+      pgm = Not Calibrated;
+      replay = Not Calibrated;
+      epts = Not Calibrated;
+      audio = Not Calibrated;
     }
 
     return `<tr>
