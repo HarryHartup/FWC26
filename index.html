@@ -1113,25 +1113,33 @@ function buildColours(){
 function buildSync(){
   const tbody = document.getElementById('syncBody');
   const missing = `<span class="sync-value-missing">missing</span>`;
+
   function syncVal(v){
     return `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">${v}</span>`;
   }
+
   tbody.innerHTML = VENUES_SYNC.map(v => {
     let pgm, replay, epts, audio;
-    if(v.name === 'Guadalajara'){
+
+    if (v.name === 'Guadalajara') {
       pgm    = syncVal(19);
       replay = syncVal(16);
       epts   = syncVal(192);
       audio  = syncVal(19);
-      } {
-    if(v.name === 'Miami '){
+
+    } else if (v.name === 'Miami') {
       pgm    = syncVal(69);
       replay = syncVal(69);
       epts   = syncVal(69);
       audio  = syncVal(69);
+
     } else {
-      pgm = missing; replay = missing; epts = missing; audio = missing;
+      pgm = missing;
+      replay = missing;
+      epts = missing;
+      audio = missing;
     }
+
     return `<tr>
       <td>
         <span class="sync-venue-name">${v.name}</span>
@@ -1144,7 +1152,6 @@ function buildSync(){
     </tr>`;
   }).join('');
 }
-
 function toggleColour(titleEl){
   const row=titleEl.closest('.colour-row');
   row.classList.toggle('open');
