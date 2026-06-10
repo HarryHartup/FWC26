@@ -1115,16 +1115,18 @@ function buildSync(){
   const audioMissing = `<span class="sync-value-missing">missing</span>`;
 
   tbody.innerHTML = VENUES_SYNC.map(v => {
-    let pgm, replay, epts;
+    let pgm, replay, epts, audio;
 
     if (v.name === 'Guadalajara') {
       pgm    = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">19</span>`;
       replay = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">16</span>`;
       epts   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">192</span>`;
+      audio   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
     } else if (v.name === 'Los Angeles') {
       pgm    = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
       replay = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
       epts   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">194</span>`;
+      audio   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
     } else {
       pgm = missing;
       replay = missing;
