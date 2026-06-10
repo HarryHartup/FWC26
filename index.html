@@ -1113,15 +1113,24 @@ function buildSync(){
   const tbody = document.getElementById('syncBody');
   const missing = `<span class="sync-value-missing">missing</span>`;
   const audioMissing = `<span class="sync-value-missing">missing</span>`;
+
   tbody.innerHTML = VENUES_SYNC.map(v => {
     let pgm, replay, epts;
-    if(v.name === 'Guadalajara'){
+
+    if (v.name === 'Guadalajara') {
       pgm    = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">19</span>`;
       replay = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">16</span>`;
       epts   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">192</span>`;
+    } else if (v.name === 'Los Angeles') {
+      pgm    = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
+      replay = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">0</span>`;
+      epts   = `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">194</span>`;
     } else {
-      pgm = missing; replay = missing; epts = missing;
+      pgm = missing;
+      replay = missing;
+      epts = missing;
     }
+
     return `<tr>
       <td>
         <span class="sync-venue-name">${v.name}</span>
@@ -1134,12 +1143,6 @@ function buildSync(){
     </tr>`;
   }).join('');
 }
-
-function toggleColour(titleEl){
-  const row=titleEl.closest('.colour-row');
-  row.classList.toggle('open');
-}
-
 function populateFilters(){
   const venues=[...new Set(matchData.map(m=>m[2]))].sort();
   const dates=[...new Set(matchData.map(m=>m[1]))].sort();
