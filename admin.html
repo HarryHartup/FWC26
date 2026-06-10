@@ -65,8 +65,8 @@
 </div>
 
 <div class="config-bar" id="syncContainer" style="display: none; background: #1A2038;">
-  <span style="font-weight: 600; color: #8892AA; font-size: 12px;">⚙️ Sync Values:</span>
-  <div id="syncInputs" style="display: flex; gap: 10px; width: 100%;"></div>
+  <span style="font-weight: 600; color: #8892AA; font-size: 12px; display:block; margin-bottom: 4px;">⚙️ Sync Values:</span>
+  <div id="syncInputs" style="width: 100%;"></div>
 </div>
 
 <div class="table-wrapper" id="tableContainer">
@@ -112,10 +112,9 @@ const FILE_PATH = 'index.html';
 const BRANCH = 'main';            
 
 let matches = [];
-let syncValues = [];
+let syncValues = {};
 let fullLiveHTML = "";
 
-// Pull token from browser storage on load if it exists
 if (localStorage.getItem('mcr_gh_token')) {
   document.getElementById('tokenField').value = localStorage.getItem('mcr_gh_token');
 }
@@ -124,7 +123,6 @@ function saveTokenLocally(val) {
   localStorage.setItem('mcr_gh_token', val.trim());
 }
 
-// Loads the public data directly from raw servers (Never blocks or requires authorization to view)
 const LIVE_URL = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${FILE_PATH}?nocache=${new Date().getTime()}`;
 
 async function fetchLiveSite() {
@@ -138,8 +136,8 @@ async function fetchLiveSite() {
     const matchRegex = /const matches\s*=\s*\[([\s\S]*?)\];/;
     const matchData = fullLiveHTML.match(matchRegex);
     
-    // Parse Sync Values (Assumes a format like: const syncValues = [val1, val2];)
-    const syncRegex = /const syncValues\s*=\s*(\[.*?\]|\{.*?\});/s; 
+    // Parse Sync Values (now expecting an object)
+    const syncRegex = /const syncValues\s*=\s*(\{[\s\S]*?\});/; 
     const syncData = fullLiveHTML.match(syncRegex);
 
     if (matchData) {
@@ -167,16 +165,34 @@ async function fetchLiveSite() {
 }
 
 function renderSyncInputs() {
-  document.getElementById('syncContainer').style.display = 'flex';
-  const container = document.getElementById('syncInputs');
+  const containerWrapper = document.getElementById('syncContainer');
+  containerWrapper.style.display = 'block'; 
   
-  container.innerHTML = syncValues.map((val, index) => {
-    return `<input type="text" value="${val}" onchange="updateSyncVal(${index}, this.value)" style="width: 140px;" placeholder="Sync Value ${index + 1}">`;
-  }).join('');
+  const container = document.getElementById('syncInputs');
+  container.style.display = 'grid';
+  container.style.gridTemplateColumns = 'repeat(auto-fill, minmax(280px, 1fr))';
+  container.style.gap = '12px';
+  container.style.marginTop = '12px';
+  
+  let html = '';
+  for(const [venue, vals] of Object.entries(syncValues)){
+    html += `
+    <div style="background: #161B2E; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+      <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; margin-bottom: 8px; color: #F5A623; letter-spacing: 1px;">${venue}</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
+        <input type="text" value="${vals[0]}" onchange="updateSyncVal('${venue}', 0, this.value)" placeholder="PGM" title="PGM">
+        <input type="text" value="${vals[1]}" onchange="updateSyncVal('${venue}', 1, this.value)" placeholder="Rep" title="Replay">
+        <input type="text" value="${vals[2]}" onchange="updateSyncVal('${venue}', 2, this.value)" placeholder="UNI" title="UNI Data">
+        <input type="text" value="${vals[3]}" onchange="updateSyncVal('${venue}', 3, this.value)" placeholder="Aud" title="Audio">
+      </div>
+    </div>`;
+  }
+  container.innerHTML = html;
 }
 
-function updateSyncVal(index, val) { 
-  syncValues[index] = val; 
+function updateSyncVal(venue, index, val) { 
+  // Automatically convert string numbers back to actual numbers to maintain data integrity
+  syncValues[venue][index] = val === "" ? "" : isNaN(Number(val)) ? val : Number(val); 
 }
 
 function renderTable() {
@@ -271,7 +287,6 @@ async function executeDeploy() {
   try {
     const dispatchUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/dispatches`;
     
-    // Sends a clean event to GitHub Actions carrying your modified table arrays AND sync values
     const response = await fetch(dispatchUrl, {
       method: 'POST',
       headers: {
@@ -283,7 +298,7 @@ async function executeDeploy() {
         event_type: 'update_schedule_data',
         client_payload: {
           matches: getCleanArrayString(),
-          sync_values: JSON.stringify(syncValues) // Carries sync values down the pipeline
+          sync_values: JSON.stringify(syncValues, null, 2)
         }
       })
     });
