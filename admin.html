@@ -58,14 +58,17 @@
   </div>
 </div>
 
-<!-- SECURE LOCAL ACCESS KEYS BAR -->
 <div class="config-bar">
   <span style="font-weight: 600; color: #8892AA; font-size: 12px;">🔑 Control Room Token Auth:</span>
   <input type="password" id="tokenField" placeholder="Paste your classic ghp_ token here..." style="width: 320px;" onchange="saveTokenLocally(this.value)">
   <span style="font-size: 11px; color: #65718B;">Saved locally to this browser tab session. Will never be hardcoded or made public.</span>
 </div>
 
-<!-- DATA CONTAINER TABLE -->
+<div class="config-bar" id="syncContainer" style="display: none; background: #1A2038;">
+  <span style="font-weight: 600; color: #8892AA; font-size: 12px;">⚙️ Sync Values:</span>
+  <div id="syncInputs" style="display: flex; gap: 10px; width: 100%;"></div>
+</div>
+
 <div class="table-wrapper" id="tableContainer">
   <table id="editorTable">
     <thead>
@@ -88,7 +91,6 @@
   </table>
 </div>
 
-<!-- CONFIRMATION SCREEN MODAL -->
 <div id="confirmModal" class="modal-overlay">
   <div class="modal-content">
     <h3>⚠️ Trigger Action Deploy?</h3>
@@ -110,6 +112,7 @@ const FILE_PATH = 'index.html';
 const BRANCH = 'main';            
 
 let matches = [];
+let syncValues = [];
 let fullLiveHTML = "";
 
 // Pull token from browser storage on load if it exists
@@ -130,12 +133,24 @@ async function fetchLiveSite() {
     if (!res.ok) throw new Error("Could not pull content baseline stream.");
     
     fullLiveHTML = await res.text();
-    const regex = /const matches\s*=\s*\[([\s\S]*?)\];/;
-    const match = fullLiveHTML.match(regex);
     
-    if (match) {
-      const arrayStr = "[" + match[1] + "]";
+    // Parse Schedule Matches
+    const matchRegex = /const matches\s*=\s*\[([\s\S]*?)\];/;
+    const matchData = fullLiveHTML.match(matchRegex);
+    
+    // Parse Sync Values (Assumes a format like: const syncValues = [val1, val2];)
+    const syncRegex = /const syncValues\s*=\s*(\[.*?\]|\{.*?\});/s; 
+    const syncData = fullLiveHTML.match(syncRegex);
+
+    if (matchData) {
+      const arrayStr = "[" + matchData[1] + "]";
       matches = new Function("return " + arrayStr)();
+      
+      // Attempt to load and render Sync Values
+      if (syncData) {
+        syncValues = new Function("return " + syncData[1])();
+        renderSyncInputs();
+      }
       
       document.getElementById('statusLabel').innerHTML = "🟢 Connected to live file configuration system";
       document.getElementById('statusLabel').style.color = "#3DE090";
@@ -149,6 +164,19 @@ async function fetchLiveSite() {
     document.getElementById('statusLabel').innerHTML = "🔴 Connectivity Interrupted: " + err.message;
     document.getElementById('statusLabel').style.color = "#FF6B6B";
   }
+}
+
+function renderSyncInputs() {
+  document.getElementById('syncContainer').style.display = 'flex';
+  const container = document.getElementById('syncInputs');
+  
+  container.innerHTML = syncValues.map((val, index) => {
+    return `<input type="text" value="${val}" onchange="updateSyncVal(${index}, this.value)" style="width: 140px;" placeholder="Sync Value ${index + 1}">`;
+  }).join('');
+}
+
+function updateSyncVal(index, val) { 
+  syncValues[index] = val; 
 }
 
 function renderTable() {
@@ -243,7 +271,7 @@ async function executeDeploy() {
   try {
     const dispatchUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/dispatches`;
     
-    // Sends a clean event to GitHub Actions carrying your modified table arrays
+    // Sends a clean event to GitHub Actions carrying your modified table arrays AND sync values
     const response = await fetch(dispatchUrl, {
       method: 'POST',
       headers: {
@@ -254,7 +282,8 @@ async function executeDeploy() {
       body: JSON.stringify({
         event_type: 'update_schedule_data',
         client_payload: {
-          matches: getCleanArrayString()
+          matches: getCleanArrayString(),
+          sync_values: JSON.stringify(syncValues) // Carries sync values down the pipeline
         }
       })
     });
