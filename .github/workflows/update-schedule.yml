@@ -14,34 +14,43 @@ jobs:
       - name: Checkout Repository Code
         uses: actions/checkout@v4
 
-      - name: Inject New Schedule Array
+      - name: Inject New Schedule Array and Sync Values
         # Setting the payload inside 'env' keeps Bash from trying to read the text as code execution lines
         env:
           MATCHES_DATA: ${{ github.event.client_payload.matches }}
+          SYNC_VALUES_DATA: ${{ github.event.client_payload.sync_values }}
         run: |
           python3 -c "
           import re, os
           
           # Grab the data safely directly out of the secure environment block
-          new_data = os.environ.get('MATCHES_DATA')
+          new_matches = os.environ.get('MATCHES_DATA')
+          new_sync = os.environ.get('SYNC_VALUES_DATA')
           
-          if not new_data:
+          if not new_matches:
               print('Critical Error: MATCHES_DATA environment variable is empty.')
               exit(1)
+              
+          if not new_sync:
+              print('Critical Error: SYNC_VALUES_DATA environment variable is empty.')
+              exit(1)
           
-          with open('index.html', 'r') as f:
+          with open('index.html', 'r', encoding='utf-8') as f:
               content = f.read()
           
-          # Clean regex substitution to target your match variables precisely
-          updated = re.sub(r'(const matches\s*=\s*)\[[\s\S]*?\];', f'\g<1>{new_data};', content)
+          # Clean regex substitution to target your matches array
+          content = re.sub(r'const matches\s*=\s*\[[\s\S]*?\];', f'const matches={new_matches};', content)
           
-          with open('index.html', 'w') as f:
-              f.write(updated)
+          # Clean regex substitution to target your syncValues object
+          content = re.sub(r'const syncValues\s*=\s*\{[\s\S]*?\};', f'const syncValues={new_sync};', content)
+          
+          with open('index.html', 'w', encoding='utf-8') as f:
+              f.write(content)
           "
 
       - name: Commit and Push Changes Live
         run: |
           git config --global user.name "MCR Automated Update"
           git config --global user.email "actions@github.com"
-          git commit -am "Update live schedule via MCR Admin Form"
+          git commit -am "Update live schedule and sync values via MCR Admin Form"
           git push
