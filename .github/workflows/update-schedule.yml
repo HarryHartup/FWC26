@@ -15,17 +15,25 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Inject New Schedule Array
+        # Setting the payload inside 'env' keeps Bash from trying to read the text as code execution lines
+        env:
+          MATCHES_DATA: ${{ github.event.client_payload.matches }}
         run: |
-          # Grabs the new data array sent from your admin panel
-          NEW_DATA='${{ github.event.client_payload.matches }}'
-          
-          # Replaces the old array inside index.html using a clean python replacement block
           python3 -c "
-          import re
+          import re, os
+          
+          # Grab the data safely directly out of the secure environment block
+          new_data = os.environ.get('MATCHES_DATA')
+          
+          if not new_data:
+              print('Critical Error: MATCHES_DATA environment variable is empty.')
+              exit(1)
+          
           with open('index.html', 'r') as f:
               content = f.read()
           
-          updated = re.sub(r'(const matches\s*=\s*)\[[\s\S]*?\];', f'\g<1>{NEW_DATA};', content)
+          # Clean regex substitution to target your match variables precisely
+          updated = re.sub(r'(const matches\s*=\s*)\[[\s\S]*?\];', f'\g<1>{new_data};', content)
           
           with open('index.html', 'w') as f:
               f.write(updated)
