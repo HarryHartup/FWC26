@@ -491,9 +491,7 @@
 
 <div class="main">
 
-  <!-- DASHBOARD / OVERVIEW TAB -->
   <div id="overviewTab" class="tab-content active">
-    <!-- NEXT 3 GLOBAL STRIP -->
     <div class="next3-strip">
       <div class="next3-header">
         <div class="next3-pulse"></div>
@@ -502,7 +500,6 @@
       <div class="next3-items" id="next3Items"></div>
     </div>
 
-    <!-- KIT PANEL -->
     <div class="kit-panel">
       <div class="kit-panel-header">
         <div class="next3-pulse"></div>
@@ -511,7 +508,6 @@
       <div class="kit-grid" id="kitGrid"></div>
     </div>
 
-    <!-- STATION CARDS -->
     <div class="station-panel" id="stationPanel">
       <div class="station-card stn-1" id="stnCard1"></div>
       <div class="station-card stn-2" id="stnCard2"></div>
@@ -519,10 +515,8 @@
     </div>
   </div>
 
-  <!-- FULL SCHEDULE TAB -->
   <div id="fullTab" class="tab-content">
     
-    <!-- MATCH FILTERS (Hidden initially because overview is active) -->
     <div class="filters" id="matchFilters" style="display: none;">
       <div class="filter-group">
         <span class="filter-label">Search</span>
@@ -567,7 +561,6 @@
       <button class="btn btn-outline" onclick="clearFilters()">✕ Clear</button>
     </div>
 
-    <!-- MATCH TABLE -->
     <div class="table-wrapper">
       <div class="table-header-row" style="border-top: none;">
         <div class="table-title">Full Schedule</div>
@@ -642,8 +635,6 @@
 
   <div id="ipsTab" class="tab-content">
     <div class="ip-page">
-
-      <!-- STATIONS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">HawkVR Stations</div>
@@ -653,7 +644,6 @@
         <div class="ip-section-note">Stations share .2 and .10 networks — last octet shown. Click any address to copy.</div>
       </div>
 
-      <!-- VR UNITS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">VR Units</div>
@@ -663,7 +653,6 @@
         <div class="ip-section-note">10Gb on .2 &amp; .3 networks &nbsp;·&nbsp; 1Gb on .201</div>
       </div>
 
-      <!-- DSF PCs -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DSF PCs</div>
@@ -672,7 +661,6 @@
         <div class="ip-grid" id="ipDSF"></div>
       </div>
 
-      <!-- DNS SETTINGS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DNS Settings</div>
@@ -680,7 +668,6 @@
         </div>
         <div class="ip-grid" id="ipDNS"></div>
       </div>
-
     </div>
   </div>
 </div>
@@ -763,6 +750,25 @@ const VENUES_SYNC = [
   { name:"Toronto",              tgm:"TOR" },
   { name:"Vancouver",            tgm:"VAN" },
 ];
+
+const syncValues = {
+  "Atlanta": ["", "", "", ""],
+  "Boston": ["", "", "", ""],
+  "Dallas": ["", "", "", ""],
+  "Guadalajara": [19, 16, 192, 19],
+  "Houston": ["", "", "", ""],
+  "Kansas City": ["", "", "", ""],
+  "Los Angeles": [0, 0, 194, 0],
+  "Mexico City": ["", "", "", ""],
+  "Miami": ["", "", "", ""],
+  "Monterrey": ["", "", "", ""],
+  "New York/New Jersey": ["", "", "", ""],
+  "Philadelphia": ["", "", "", ""],
+  "San Francisco Bay Area": ["", "", "", ""],
+  "Seattle": ["", "", "", ""],
+  "Toronto": ["", "", "", ""],
+  "Vancouver": ["", "", "", ""]
+};
 
 function luminance(hex){
   if(!hex||hex==='MISSING') return 0;
@@ -1090,33 +1096,24 @@ function buildColours(){
 function buildSync(){
   const tbody = document.getElementById('syncBody');
   const missing = `<span class="sync-value-missing">missing</span>`;
+  
   function syncVal(v){
+    if (v === "" || v === null || v === undefined) return missing;
     return `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">${v}</span>`;
   }
+  
   tbody.innerHTML = VENUES_SYNC.map(v => {
-    let pgm, replay, epts, audio;
-    if(v.name === 'Guadalajara'){
-      pgm    = syncVal(19);
-      replay = syncVal(16);
-      epts   = syncVal(192);
-      audio  = syncVal(19);
-    } else if(v.name === 'Los Angeles'){
-      pgm    = syncVal(0);
-      replay = syncVal(0);
-      epts   = syncVal(194);
-      audio  = syncVal(0);
-    } else {
-      pgm = missing; replay = missing; epts = missing; audio = missing;
-    }
+    const vals = syncValues[v.name] || ["", "", "", ""];
+    
     return `<tr>
       <td>
         <span class="sync-venue-name">${v.name}</span>
         <span class="sync-trigram">${v.tgm}</span>
       </td>
-      <td class="sync-col-main">${pgm}</td>
-      <td class="sync-col-backup">${replay}</td>
-      <td class="sync-col-uni">${epts}</td>
-      <td class="sync-col-audio">${audio}</td>
+      <td class="sync-col-main">${syncVal(vals[0])}</td>
+      <td class="sync-col-backup">${syncVal(vals[1])}</td>
+      <td class="sync-col-uni">${syncVal(vals[2])}</td>
+      <td class="sync-col-audio">${syncVal(vals[3])}</td>
     </tr>`;
   }).join('');
 }
@@ -1332,7 +1329,8 @@ function getActiveMatch(stn, nowMs){
 }
 
 function renderCountdown(koMs, nowMs, state){
-  if(state === 'live' || state === 'warning'){
+  // 1. Only format elapsed/negative time for LIVE matches
+  if(state === 'live'){
     const elapsed = Math.floor((nowMs - koMs)/1000);
     let elapsedStr;
     if (elapsed < 0) {
@@ -1342,21 +1340,19 @@ function renderCountdown(koMs, nowMs, state){
       elapsedStr = `${Math.floor(elapsed/60)}' ${String(elapsed % 60).padStart(2,'0')}" elapsed`;
     }
     
-    const badgeHtml = state === 'live' 
-      ? `<span class="countdown-live">● LIVE</span>` 
-      : `<span class="countdown-live" style="color:#FF6B6B; animation:none;">WARNING</span>`;
-      
     return `<div class="station-countdown">
-      ${badgeHtml}
+      <span class="countdown-live">● LIVE</span>
       <span style="margin-left:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);">${elapsedStr}</span>
     </div>`;
   }
   
+  // 2. Both 'upcoming' AND 'warning' states fall through to standard numerical countdown
   const diff = Math.max(0, koMs - nowMs);
   const totalMins = Math.floor(diff/60000);
   const h = Math.floor(totalMins/60);
   const min = totalMins % 60;
   const sec = Math.floor((diff % 60000)/1000);
+  
   if(h >= 24){
     const days = Math.floor(h/24);
     const remH = h % 24;
@@ -1366,6 +1362,7 @@ function renderCountdown(koMs, nowMs, state){
       <span class="countdown-val">${remH}</span><span class="countdown-unit">h</span>
     </div>`;
   }
+  
   return `<div class="station-countdown">
     <span class="countdown-val">${String(h).padStart(2,'0')}</span><span class="countdown-unit">h</span>
     <span class="countdown-sep">:</span>
@@ -1403,7 +1400,7 @@ function renderStationCard(stn, cardEl){
     statusLbl = '● Live';
   } else if (state === 'warning') {
     statusCls = 'status-warning';
-    statusLbl = '30m Warning';
+    statusLbl = 'Up Next';
     cardEl.classList.add('card-warning'); 
   }
 
