@@ -63,7 +63,7 @@
   .sv-red { color:#FF6B6B; }
   .stat-divider { width:1px; height:36px; background:var(--border); flex-shrink:0; }
 
-  .filters { background: var(--dark2); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .filters { background: var(--dark2); border-bottom:1px solid var(--border); padding:12px 24px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; border-radius: 8px 8px 0 0; }
   .filter-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); }
   select, input[type="text"] { background:var(--panel); border:1px solid var(--border); color:var(--text); padding:7px 12px; border-radius:4px; font-family:'Barlow',sans-serif; font-size:13px; outline:none; cursor:pointer; }
   select:focus, input[type="text"]:focus { border-color:var(--fifa-gold); box-shadow:0 0 0 2px rgba(245,166,35,0.15); }
@@ -79,7 +79,7 @@
 
   .main { padding:24px; }
 
-  .table-wrapper { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; overflow-x:auto; }
+  .table-wrapper { background:var(--dark2); border:1px solid var(--border); border-radius: 0 0 8px 8px; overflow:hidden; overflow-x:auto; }
   .table-header-row { display:flex; align-items:center; padding:14px 20px; border-bottom:1px solid var(--border); background:var(--panel); gap:12px; }
   .table-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase; color:var(--text); }
   .record-count { font-size:12px; padding:3px 12px; background:rgba(245,166,35,0.12); color:var(--fifa-gold); border-radius:20px; font-weight:600; margin-left:auto; border:1px solid rgba(245,166,35,0.25); }
@@ -111,7 +111,6 @@
   .round-f     { background:rgba(245,166,35,0.35);color:var(--fifa-gold); border:1px solid var(--fifa-gold); }
   .round-3p    { background:rgba(180,180,180,0.12);color:#C0C0C0; border:1px solid rgba(180,180,180,0.25); }
   .round-svm   { background:rgba(180,180,100,0.18); color:#E8E060; border:1px solid rgba(180,180,100,0.35); }
-
 
   .team-chip { display:inline-flex; align-items:center; gap:8px; padding:4px 10px 4px 5px; border-radius:20px; border:1px solid transparent; cursor:pointer; transition:all 0.18s; position:relative; min-width:140px; }
   .team-chip:hover { border-color:rgba(255,255,255,0.2); filter:brightness(1.15); transform:translateY(-1px); }
@@ -467,61 +466,16 @@
 </div>
 
 <div class="tabs">
-  <button class="tab active" onclick="switchTab('matches',this)">Match Schedule</button>
+  <button class="tab active" onclick="switchTab('overview',this)">Upcoming Overview</button>
   <button class="tab" onclick="switchTab('full',this)">Full Schedule</button>
   <button class="tab" onclick="switchTab('colours',this)">Team Colours</button>
   <button class="tab" onclick="switchTab('sync',this)">Sync Values</button>
   <button class="tab" onclick="switchTab('ips',this)">IP Addresses</button>
 </div>
 
-<div class="filters" id="matchFilters">
-  <div class="filter-group">
-    <span class="filter-label">Search</span>
-    <input type="text" id="searchInput" placeholder="Team, venue, match…" oninput="applyFilters()">
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Round</span>
-    <select id="roundFilter" onchange="applyFilters()">
-      <option value="">All Rounds</option>
-      <option>Group Stage</option>
-      <option>Round of 32</option>
-      <option>Round of 16</option>
-      <option>Quarterfinals</option>
-      <option>Semifinal</option>
-      <option>Third Place Playoff</option>
-      <option>Final</option>
-      <option>Stadium Validation</option>
-    </select>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Venue</span>
-    <select id="venueFilter" onchange="applyFilters()"><option value="">All Venues</option></select>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">Date</span>
-    <select id="dateFilter" onchange="applyFilters()"><option value="">All Dates</option></select>
-  </div>
-  <div class="filter-group">
-    <span class="filter-label">HawkVR Op</span>
-    <select id="opFilter" onchange="applyFilters()">
-      <option value="">All Operators</option>
-      <option>Alex Hithersay</option>
-      <option>Jake Jones</option>
-      <option>Harry Hartup</option>
-    </select>
-  </div>
-  <div class="filter-group" style="margin-left:auto;">
-    <button class="btn btn-toggle" id="hideCompletedBtn" onclick="toggleHideCompleted()" title="Hide matches that have finished">
-      <span id="hideCompletedIcon">○</span> Hide Completed
-    </button>
-  </div>
-  <button class="btn btn-outline" onclick="clearFilters()">✕ Clear</button>
-</div>
-
 <div class="main">
-  <div id="matchesTab" class="tab-content active">
 
-    <!-- NEXT 3 GLOBAL STRIP -->
+  <div id="overviewTab" class="tab-content active">
     <div class="next3-strip">
       <div class="next3-header">
         <div class="next3-pulse"></div>
@@ -530,7 +484,6 @@
       <div class="next3-items" id="next3Items"></div>
     </div>
 
-    <!-- KIT PANEL -->
     <div class="kit-panel">
       <div class="kit-panel-header">
         <div class="next3-pulse"></div>
@@ -539,17 +492,62 @@
       <div class="kit-grid" id="kitGrid"></div>
     </div>
 
-    <!-- STATION CARDS -->
     <div class="station-panel" id="stationPanel">
       <div class="station-card stn-1" id="stnCard1"></div>
       <div class="station-card stn-2" id="stnCard2"></div>
       <div class="station-card stn-3" id="stnCard3"></div>
     </div>
+  </div>
 
-    <!-- MATCH TABLE -->
+  <div id="fullTab" class="tab-content">
+    
+    <div class="filters" id="matchFilters">
+      <div class="filter-group">
+        <span class="filter-label">Search</span>
+        <input type="text" id="searchInput" placeholder="Team, venue, match…" oninput="applyFilters()">
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Round</span>
+        <select id="roundFilter" onchange="applyFilters()">
+          <option value="">All Rounds</option>
+          <option>Group Stage</option>
+          <option>Round of 32</option>
+          <option>Round of 16</option>
+          <option>Quarterfinals</option>
+          <option>Semifinal</option>
+          <option>Third Place Playoff</option>
+          <option>Final</option>
+          <option>Stadium Validation</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Venue</span>
+        <select id="venueFilter" onchange="applyFilters()"><option value="">All Venues</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Date</span>
+        <select id="dateFilter" onchange="applyFilters()"><option value="">All Dates</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">HawkVR Op</span>
+        <select id="opFilter" onchange="applyFilters()">
+          <option value="">All Operators</option>
+          <option>Alex Hithersay</option>
+          <option>Jake Jones</option>
+          <option>Harry Hartup</option>
+        </select>
+      </div>
+      <div class="filter-group" style="margin-left:auto;">
+        <button class="btn btn-toggle" id="hideCompletedBtn" onclick="toggleHideCompleted()" title="Hide matches that have finished">
+          <span id="hideCompletedIcon">○</span> Hide Completed
+        </button>
+      </div>
+      <button class="btn btn-outline" onclick="clearFilters()">✕ Clear</button>
+    </div>
+
     <div class="table-wrapper">
-      <div class="table-header-row">
-        <div class="table-title">Match Schedule</div>
+      <div class="table-header-row" style="border-top: none;">
+        <div class="table-title">Full Schedule</div>
         <div class="record-count" id="recordCount">104 matches</div>
       </div>
       <table id="matchTable">
@@ -569,7 +567,6 @@
             <th>HawkVR Op</th>
             <th>Station</th>
             <th>Sync Time</th>
-            <th>Tracking Sup</th>
           </tr>
         </thead>
         <tbody id="matchBody"></tbody>
@@ -587,47 +584,6 @@
     </div>
   </div>
 
-
-  <div id="fullTab" class="tab-content">
-    <div class="table-wrapper">
-      <div class="table-header-row">
-        <div class="table-title">Full Schedule</div>
-        <div class="record-count">104 matches</div>
-      </div>
-      <table id="fullMatchTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Date</th>
-            <th>Venue</th>
-            <th>TGM</th>
-            <th>KO IBC</th>
-            <th>KO Local</th>
-            <th>Round</th>
-            <th>Team A <span style="color:rgba(255,255,255,0.25);font-weight:400">(Home)</span></th>
-            <th>Team B <span style="color:rgba(255,255,255,0.25);font-weight:400">(Away)</span></th>
-            <th>KIT</th>
-            <th>GFX</th>
-            <th>HawkVR Op</th>
-            <th>Station</th>
-            <th>Sync Time</th>
-            <th>Tracking Sup</th>
-          </tr>
-        </thead>
-        <tbody id="fullMatchBody"></tbody>
-      </table>
-      <div class="legend-row">
-        <span class="legend-item"><span class="round-badge round-group">GRP</span> Group Stage</span>
-        <span class="legend-item"><span class="round-badge round-r32">R32</span> Round of 32</span>
-        <span class="legend-item"><span class="round-badge round-r16">R16</span> Round of 16</span>
-        <span class="legend-item"><span class="round-badge round-qf">QF</span> Quarterfinals</span>
-        <span class="legend-item"><span class="round-badge round-sf">SF</span> Semifinal</span>
-        <span class="legend-item"><span class="round-badge round-f">F</span> Final</span>
-        <span class="legend-item"><span class="round-badge round-svm">SVM</span> Stadium Validation</span>
-        <span style="margin-left:auto;font-size:11px;color:var(--muted)">Complete unfiltered schedule</span>
-      </div>
-    </div>
-  </div>
   <div id="coloursTab" class="tab-content">
     <div class="colours-panel">
       <div class="colours-header">
@@ -664,7 +620,6 @@
   <div id="ipsTab" class="tab-content">
     <div class="ip-page">
 
-      <!-- STATIONS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">HawkVR Stations</div>
@@ -674,7 +629,6 @@
         <div class="ip-section-note">Stations share .2 and .10 networks — last octet shown. Click any address to copy.</div>
       </div>
 
-      <!-- VR UNITS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">VR Units</div>
@@ -684,7 +638,6 @@
         <div class="ip-section-note">10Gb on .2 &amp; .3 networks &nbsp;·&nbsp; 1Gb on .201</div>
       </div>
 
-      <!-- DSF PCs -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DSF PCs</div>
@@ -693,7 +646,6 @@
         <div class="ip-grid" id="ipDSF"></div>
       </div>
 
-      <!-- DNS SETTINGS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DNS Settings</div>
@@ -854,9 +806,6 @@ function roundBadge(r){
 function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; return v; }
 
 // ── MATCH DATA ──────────────────────────────────────────────────────────────
-// Index: 0=num, 1=date, 2=venue, 3=tgm, 4=koIBC, 5=round, 6=teamA, 7=teamB,
-//        8=kit, 9=gfx, 10=station, 11=operator
-// SVM station assignments: cycling 1→2→3 (SVM1=1, SVM2=2, SVM3=3, SVM4=1, ...)
 const matches=[
   ["SVM1","08/06/2026","Mexico City","CDMX","19:00","Stadium Validation","Mexico","South Africa","A","A","1",""],
   ["SVM2","09/06/2026","Guadalajara","GDL","15:00","Stadium Validation","Korea Republic","Czechia","A","A","2",""],
@@ -879,7 +828,7 @@ const matches=[
   ["M6","13/06/2026","Vancouver","VAN","17:00","Group Stage","Brazil","Morocco","B","B","2","Alex Hithersay"],
   ["M7","13/06/2026","New York/New Jersey","NYNJ","20:00","Group Stage","Haiti","Scotland","C","C","3","Harry Hartup"],
   ["M8","13/06/2026","San Francisco Bay Area","SFBA","23:00","Group Stage","Australia","Türkiye","D","D","1","Jake Jones"],
-  ["SVM14","16/06/2026","Kansas City","KC","11:00","Group Stage","Argentina","Algeria","E","A","3",""],
+  ["SVM14","16/06/2026","Kansas City","KC","11:00","Stadium Validation","Argentina","Algeria","E","A","3",""],
   ["M9","14/06/2026","Philadelphia","PHL","12:00","Group Stage","Germany","Curaçao","A","A","1","Alex Hithersay"],
   ["M10","14/06/2026","Houston","HOU","15:00","Group Stage","Netherlands","Japan","B","B","2","Alex Hithersay"],
   ["M11","14/06/2026","Dallas","DAL","18:00","Group Stage","Côte d'Ivoire","Ecuador","C","C","3","Jake Jones"],
@@ -975,7 +924,7 @@ const matches=[
   ["M101","14/07/2026","Dallas","DAL","14:00","Semifinal","TBC","TBC","A","A","",""],
   ["M102","15/07/2026","Atlanta","ATL","14:00","Semifinal","TBC","TBC","A","A","",""],
   ["M103","18/07/2026","Miami","MIA","16:00","Third Place Playoff","TBC","TBC","A","A","","Harry Hartup"],
-  ["M104","19/07/2026","New York/New Jersey","NYNJ","14:00","Final","TBC","TBC","A","A","","Alex Hithersay"],
+  ["M104","19/07/2026","New York/New Jersey","NYNJ","14:00","Final","TBC","TBC","A","A","","Alex Hithersay"]
 ];
 
 function opCell(name){
@@ -1041,7 +990,7 @@ function toggleHideCompleted(){
 function buildTable(data){
   const tbody=document.getElementById('matchBody');
   if(!data.length){
-    tbody.innerHTML=`<tr><td colspan="17"><div class="empty-state"><div class="big">⚽</div><p>No matches found.</p></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="14"><div class="empty-state"><div class="big">⚽</div><p>No matches found.</p></div></td></tr>`;
     document.getElementById('recordCount').textContent='0 matches';
     document.getElementById('showingCount').textContent='0';
     return;
@@ -1049,7 +998,6 @@ function buildTable(data){
   document.getElementById('recordCount').textContent=data.length+' matches';
   document.getElementById('showingCount').textContent=data.length;
   tbody.innerHTML=data.map((m)=>{
-    const origIdx=matchData.indexOf(m);
     const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator]=m;
     const koLocal = koIBC && koIBC !== '-' ? localKOFromIBC(venue, koIBC) : '-';
     const done = isMatchCompleted(m);
@@ -1068,7 +1016,6 @@ function buildTable(data){
       <td>${opCell(operator)}</td>
       <td>${stationCell(station)}</td>
       <td><span class="time-cell">${syncTimeFromIBC(koIBC)}</span></td>
-      <td><span class="contrib-cell">${origIdx >= 92 ? 'Dom Radford' : '-'}</span></td>
     </tr>`;
   }).join('');
 }
@@ -1079,8 +1026,8 @@ function buildColours(){
   list.innerHTML=teams.map(t=>{
     const d=TC[t];
     const kits=[
-      {label:'HOME',     colour:d.home},
-      {label:'AWAY',     colour:d.away},
+      {label:'HOME',      colour:d.home},
+      {label:'AWAY',      colour:d.away},
       {label:'GK HOME',  colour:d.gkHome},
       {label:'GK AWAY',  colour:d.gkAway},
     ];
@@ -1128,7 +1075,7 @@ function buildSync(){
       epts   = syncVal(192);
       audio  = syncVal(19);
 
-} else if(v.name === 'Los Angeles'){
+    } else if(v.name === 'Los Angeles'){
       pgm    = syncVal(0);
       replay = syncVal(0);
       epts   = syncVal(0);
@@ -1171,7 +1118,6 @@ function applyFilters(){
   filteredData=matchData.filter((m)=>{
     const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,operator]=m;
     if(hideCompleted && isMatchCompleted(m)) return false;
-    if(rd==='Stadium Validation' && round!=='Stadium Validation') return false;
     if(round&&rd!==round)return false;
     if(venue&&vn!==venue)return false;
     if(date&&dt!==date)return false;
@@ -1206,35 +1152,6 @@ function switchTab(name,el){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById(name+'Tab').classList.add('active');
-  document.getElementById('matchFilters').style.display=name==='matches'?'flex':'none';
-  if(name==='full') buildFullTable();
-}
-
-function buildFullTable(){
-  const tbody = document.getElementById('fullMatchBody');
-  tbody.innerHTML = matchData.map((m) => {
-    const origIdx = matchData.indexOf(m);
-    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
-    const koLocal = koIBC && koIBC !== '-' ? localKOFromIBC(venue, koIBC) : '-';
-    const done = isMatchCompleted(m);
-    return `<tr class="${done?'completed-row':''}">
-      <td><span class="match-num">${num}</span></td>
-      <td><span class="date-cell">${val(date)}</span></td>
-      <td><span class="venue-cell">${val(venue)}</span></td>
-      <td><span class="trigram">${val(tgm)}</span></td>
-      <td><span class="time-cell">${val(koIBC)}</span></td>
-      <td><span class="time-cell" style="color:var(--muted)">${koLocal}</span></td>
-      <td>${roundBadge(round)}</td>
-      <td>${teamChip(teamA,true)}</td>
-      <td>${teamChip(teamB,false)}</td>
-      <td><span class="contrib-cell">${kit||'-'}</span></td>
-      <td><span class="contrib-cell">${gfx||'-'}</span></td>
-      <td>${opCell(operator)}</td>
-      <td>${stationCell(station)}</td>
-      <td><span class="time-cell">${syncTimeFromIBC(koIBC)}</span></td>
-      <td><span class="contrib-cell">${origIdx >= 92 ? 'Dom Radford' : '-'}</span></td>
-    </tr>`;
-  }).join('');
 }
 
 function buildIPs(){
@@ -1369,12 +1286,13 @@ function parseIBCDate(ddmmyyyy, hhmm){
 
 function getActiveMatch(stn, nowMs){
   const stMatches = matchData.filter(m => String(m[10]) === String(stn));
+  const preMatchMs = 15 * 60 * 1000;
   for(const m of stMatches){
     if(!m[1]||!m[4]) continue;
     const koMs = parseIBCDate(m[1], m[4]);
     const endMs = koMs + 2*60*60*1000;
-    if(nowMs >= koMs && nowMs < endMs) return {m, state:'live', koMs};
-    if(nowMs < koMs) return {m, state:'upcoming', koMs};
+    if(nowMs >= (koMs - preMatchMs) && nowMs < endMs) return {m, state:'live', koMs};
+    if(nowMs < (koMs - preMatchMs)) return {m, state:'upcoming', koMs};
   }
   return null;
 }
@@ -1382,11 +1300,16 @@ function getActiveMatch(stn, nowMs){
 function renderCountdown(koMs, nowMs, state){
   if(state === 'live'){
     const elapsed = Math.floor((nowMs - koMs)/1000);
-    const em = Math.floor(elapsed/60);
-    const es = elapsed % 60;
+    let elapsedStr;
+    if (elapsed < 0) {
+      const absE = Math.abs(elapsed);
+      elapsedStr = `-${Math.floor(absE/60)}' ${String(absE % 60).padStart(2,'0')}" to KO`;
+    } else {
+      elapsedStr = `${Math.floor(elapsed/60)}' ${String(elapsed % 60).padStart(2,'0')}" elapsed`;
+    }
     return `<div class="station-countdown">
       <span class="countdown-live">● LIVE</span>
-      <span style="margin-left:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);">${em}' ${String(es).padStart(2,'0')}" elapsed</span>
+      <span style="margin-left:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);">${elapsedStr}</span>
     </div>`;
   }
   const diff = Math.max(0, koMs - nowMs);
@@ -1436,7 +1359,7 @@ function renderStationCard(stn, cardEl){
 
   const allStn = matchData.filter(mx => String(mx[10]) === String(stn));
   const currentIdx = allStn.indexOf(m);
-  const nextMatches = allStn.slice(currentIdx + 1, currentIdx + 2);
+  const nextMatches = allStn.slice(currentIdx + 1, currentIdx + 4);
   const nextHtml = nextMatches.length ? `
     <div class="station-next-list">
       <div class="station-next-title">Next on Station ${stn}</div>
@@ -1492,6 +1415,7 @@ function renderNext3Global(){
   const container = document.getElementById('next3Items');
   const stnColors = {1:'#FF6B00', 2:'#5B9EFF', 3:'#3DE090'};
   const candidates = [];
+  const preMatchMs = 15 * 60 * 1000;
 
   for(const m of matchData){
     const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
@@ -1499,7 +1423,7 @@ function renderNext3Global(){
     const koMs = parseIBCDate(date, koIBC);
     const endMs = koMs + 2*60*60*1000;
     if(nowMs < endMs){
-      candidates.push({m, koMs, state: nowMs >= koMs ? 'live' : 'upcoming'});
+      candidates.push({m, koMs, state: nowMs >= (koMs - preMatchMs) ? 'live' : 'upcoming'});
     }
   }
 
@@ -1560,6 +1484,7 @@ function renderKitPanel(){
   const nowMs = Date.now();
   const kitLetters = ['A','B','C','D','E','F'];
   const container = document.getElementById('kitGrid');
+  const preMatchMs = 15 * 60 * 1000;
 
   container.innerHTML = kitLetters.map(letter => {
     let found = null;
@@ -1570,7 +1495,7 @@ function renderKitPanel(){
       const koMs = parseIBCDate(date, koIBC);
       const endMs = koMs + 2*60*60*1000;
       if(nowMs < endMs){
-        const state = nowMs >= koMs ? 'live' : 'upcoming';
+        const state = nowMs >= (koMs - preMatchMs) ? 'live' : 'upcoming';
         found = {m, koMs, state};
         break;
       }
