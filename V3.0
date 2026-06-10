@@ -828,7 +828,7 @@ const matches=[
   ["M6","13/06/2026","Vancouver","VAN","17:00","Group Stage","Brazil","Morocco","B","B","2","Alex Hithersay"],
   ["M7","13/06/2026","New York/New Jersey","NYNJ","20:00","Group Stage","Haiti","Scotland","C","C","3","Harry Hartup"],
   ["M8","13/06/2026","San Francisco Bay Area","SFBA","23:00","Group Stage","Australia","Türkiye","D","D","1","Jake Jones"],
-  ["SVM14","16/06/2026","Kansas City","KC","11:00","Group Stage","Argentina","Algeria","E","A","3",""],
+  ["SVM14","16/06/2026","Kansas City","KC","11:00","Stadium Validation","Argentina","Algeria","E","A","3",""],
   ["M9","14/06/2026","Philadelphia","PHL","12:00","Group Stage","Germany","Curaçao","A","A","1","Alex Hithersay"],
   ["M10","14/06/2026","Houston","HOU","15:00","Group Stage","Netherlands","Japan","B","B","2","Alex Hithersay"],
   ["M11","14/06/2026","Dallas","DAL","18:00","Group Stage","Côte d'Ivoire","Ecuador","C","C","3","Jake Jones"],
@@ -1118,7 +1118,6 @@ function applyFilters(){
   filteredData=matchData.filter((m)=>{
     const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,operator]=m;
     if(hideCompleted && isMatchCompleted(m)) return false;
-    if(rd==='Stadium Validation' && round!=='Stadium Validation') return false;
     if(round&&rd!==round)return false;
     if(venue&&vn!==venue)return false;
     if(date&&dt!==date)return false;
@@ -1360,7 +1359,7 @@ function renderStationCard(stn, cardEl){
 
   const allStn = matchData.filter(mx => String(mx[10]) === String(stn));
   const currentIdx = allStn.indexOf(m);
-  const nextMatches = allStn.slice(currentIdx + 1, currentIdx + 2);
+  const nextMatches = allStn.slice(currentIdx + 1, currentIdx + 4);
   const nextHtml = nextMatches.length ? `
     <div class="station-next-list">
       <div class="station-next-title">Next on Station ${stn}</div>
