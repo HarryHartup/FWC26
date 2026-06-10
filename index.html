@@ -227,7 +227,7 @@
 
   /* STATION PANEL */
   .station-panel { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
-  .station-card { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+  .station-card { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; transition: all 0.3s ease; }
   .station-card-header { display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid var(--border); }
   .station-label { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:13px; letter-spacing:2px; text-transform:uppercase; }
   .stn-1 .station-label { color:#FF6B00; }
@@ -239,6 +239,16 @@
   .station-status { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:2px 8px; border-radius:20px; }
   .status-upcoming { background:rgba(245,166,35,0.12); color:var(--fifa-gold); border:1px solid rgba(245,166,35,0.3); }
   .status-live { background:rgba(229,0,17,0.15); color:#FF6B6B; border:1px solid rgba(229,0,17,0.4); animation:livePulse 1.5s ease-in-out infinite; }
+  
+  /* 30-MIN WARNING STATE CSS */
+  @keyframes warningPulse {
+    0% { box-shadow: 0 0 0 0 rgba(229, 0, 17, 0.4); border-color: #FF6B6B; }
+    70% { box-shadow: 0 0 0 12px rgba(229, 0, 17, 0); border-color: var(--border); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 0, 17, 0); border-color: var(--border); }
+  }
+  .card-warning { animation: warningPulse 2s infinite; }
+  .status-warning { background: rgba(229,0,17,0.1); color: #FF6B6B; border: 1px solid rgba(229,0,17,0.3); }
+  
   @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
   .status-idle { background:rgba(255,255,255,0.06); color:var(--muted); border:1px solid var(--border); }
   .station-card-body { padding:12px 14px; }
@@ -257,7 +267,6 @@
   .countdown-live { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:26px; color:#FF6B6B; letter-spacing:2px; animation:livePulse 1.5s ease-in-out infinite; }
   .station-op { margin-top:10px; display:flex; align-items:center; gap:6px; }
   .station-idle-msg { padding:20px 14px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:14px; color:var(--muted); letter-spacing:1px; }
-  /* ONE next match per station */
   .station-next-list { border-top:1px solid var(--border); padding:8px 14px 10px; }
   .station-next-title { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
   .station-next-item { display:flex; align-items:center; gap:8px; padding:5px 0; }
@@ -475,7 +484,9 @@
 
 <div class="main">
 
+  <!-- DASHBOARD / OVERVIEW TAB -->
   <div id="overviewTab" class="tab-content active">
+    <!-- NEXT 3 GLOBAL STRIP -->
     <div class="next3-strip">
       <div class="next3-header">
         <div class="next3-pulse"></div>
@@ -484,6 +495,7 @@
       <div class="next3-items" id="next3Items"></div>
     </div>
 
+    <!-- KIT PANEL -->
     <div class="kit-panel">
       <div class="kit-panel-header">
         <div class="next3-pulse"></div>
@@ -492,6 +504,7 @@
       <div class="kit-grid" id="kitGrid"></div>
     </div>
 
+    <!-- STATION CARDS -->
     <div class="station-panel" id="stationPanel">
       <div class="station-card stn-1" id="stnCard1"></div>
       <div class="station-card stn-2" id="stnCard2"></div>
@@ -499,9 +512,11 @@
     </div>
   </div>
 
+  <!-- FULL SCHEDULE TAB -->
   <div id="fullTab" class="tab-content">
     
-    <div class="filters" id="matchFilters">
+    <!-- MATCH FILTERS (Hidden initially because overview is active) -->
+    <div class="filters" id="matchFilters" style="display: none;">
       <div class="filter-group">
         <span class="filter-label">Search</span>
         <input type="text" id="searchInput" placeholder="Team, venue, match…" oninput="applyFilters()">
@@ -545,6 +560,7 @@
       <button class="btn btn-outline" onclick="clearFilters()">✕ Clear</button>
     </div>
 
+    <!-- MATCH TABLE -->
     <div class="table-wrapper">
       <div class="table-header-row" style="border-top: none;">
         <div class="table-title">Full Schedule</div>
@@ -620,6 +636,7 @@
   <div id="ipsTab" class="tab-content">
     <div class="ip-page">
 
+      <!-- STATIONS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">HawkVR Stations</div>
@@ -629,6 +646,7 @@
         <div class="ip-section-note">Stations share .2 and .10 networks — last octet shown. Click any address to copy.</div>
       </div>
 
+      <!-- VR UNITS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">VR Units</div>
@@ -638,6 +656,7 @@
         <div class="ip-section-note">10Gb on .2 &amp; .3 networks &nbsp;·&nbsp; 1Gb on .201</div>
       </div>
 
+      <!-- DSF PCs -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DSF PCs</div>
@@ -646,6 +665,7 @@
         <div class="ip-grid" id="ipDSF"></div>
       </div>
 
+      <!-- DNS SETTINGS -->
       <div class="ip-section">
         <div class="ip-section-header">
           <div class="ip-section-title">DNS Settings</div>
@@ -969,7 +989,6 @@ function syncTimeFromIBC(koIBC){
 const matchData=[...matches];
 let filteredData=[...matchData];
 let sortCol=0,sortDir=1;
-
 let hideCompleted = true;
 
 function isMatchCompleted(m){
@@ -1074,7 +1093,6 @@ function buildSync(){
       replay = syncVal(16);
       epts   = syncVal(192);
       audio  = syncVal(19);
-
     } else if(v.name === 'Los Angeles'){
       pgm    = syncVal(0);
       replay = syncVal(0);
@@ -1152,6 +1170,11 @@ function switchTab(name,el){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
   document.getElementById(name+'Tab').classList.add('active');
+  
+  const filters = document.getElementById('matchFilters');
+  if(filters) {
+    filters.style.display = name === 'full' ? 'flex' : 'none';
+  }
 }
 
 function buildIPs(){
@@ -1287,18 +1310,22 @@ function parseIBCDate(ddmmyyyy, hhmm){
 function getActiveMatch(stn, nowMs){
   const stMatches = matchData.filter(m => String(m[10]) === String(stn));
   const preMatchMs = 15 * 60 * 1000;
+  const warningMs = 30 * 60 * 1000;
+  
   for(const m of stMatches){
     if(!m[1]||!m[4]) continue;
     const koMs = parseIBCDate(m[1], m[4]);
     const endMs = koMs + 2*60*60*1000;
+    
     if(nowMs >= (koMs - preMatchMs) && nowMs < endMs) return {m, state:'live', koMs};
-    if(nowMs < (koMs - preMatchMs)) return {m, state:'upcoming', koMs};
+    if(nowMs >= (koMs - warningMs) && nowMs < (koMs - preMatchMs)) return {m, state:'warning', koMs};
+    if(nowMs < (koMs - warningMs)) return {m, state:'upcoming', koMs};
   }
   return null;
 }
 
 function renderCountdown(koMs, nowMs, state){
-  if(state === 'live'){
+  if(state === 'live' || state === 'warning'){
     const elapsed = Math.floor((nowMs - koMs)/1000);
     let elapsedStr;
     if (elapsed < 0) {
@@ -1307,11 +1334,17 @@ function renderCountdown(koMs, nowMs, state){
     } else {
       elapsedStr = `${Math.floor(elapsed/60)}' ${String(elapsed % 60).padStart(2,'0')}" elapsed`;
     }
+    
+    const badgeHtml = state === 'live' 
+      ? `<span class="countdown-live">● LIVE</span>` 
+      : `<span class="countdown-live" style="color:#FF6B6B; animation:none;">WARNING</span>`;
+      
     return `<div class="station-countdown">
-      <span class="countdown-live">● LIVE</span>
+      ${badgeHtml}
       <span style="margin-left:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted);">${elapsedStr}</span>
     </div>`;
   }
+  
   const diff = Math.max(0, koMs - nowMs);
   const totalMins = Math.floor(diff/60000);
   const h = Math.floor(totalMins/60);
@@ -1340,6 +1373,7 @@ function renderStationCard(stn, cardEl){
   const active = getActiveMatch(stn, nowMs);
 
   if(!active){
+    cardEl.className = `station-card stn-${stn}`;
     cardEl.innerHTML = `
       <div class="station-card-header">
         <span class="station-label">Station ${stn}</span>
@@ -1352,8 +1386,20 @@ function renderStationCard(stn, cardEl){
   const {m, state, koMs} = active;
   const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
   const localTime = localKOFromIBC(venue, koIBC);
-  const statusCls = state==='live' ? 'status-live' : 'status-upcoming';
-  const statusLbl = state==='live' ? '● Live' : 'Up Next';
+  
+  let statusCls = 'status-upcoming';
+  let statusLbl = 'Up Next';
+  cardEl.className = `station-card stn-${stn}`; 
+  
+  if (state === 'live') {
+    statusCls = 'status-live';
+    statusLbl = '● Live';
+  } else if (state === 'warning') {
+    statusCls = 'status-warning';
+    statusLbl = '30m Warning';
+    cardEl.classList.add('card-warning'); 
+  }
+
   const opFirst = operator ? operator.split(' ')[0] : '';
   const opCls = opFirst==='Alex'?'op-alex':opFirst==='Jake'?'op-jake':opFirst?'op-harry':'';
 
