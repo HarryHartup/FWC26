@@ -1,0 +1,39 @@
+name: Update Live Match Schedule
+
+on:
+  repository_dispatch:
+    types: [update_schedule_data]
+
+permissions:
+  contents: write
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Inject New Schedule Array
+        run: |
+          # Grabs the new data array sent from your admin panel
+          NEW_DATA='${{ github.event.client_payload.matches }}'
+          
+          # Replaces the old array inside index.html using a clean python replacement block
+          python3 -c "
+          import re
+          with open('index.html', 'r') as f:
+              content = f.read()
+          
+          updated = re.sub(r'(const matches\s*=\s*)\[[\s\S]*?\];', f'\g<1>{NEW_DATA};', content)
+          
+          with open('index.html', 'w') as f:
+              f.write(updated)
+          "
+
+      - name: Commit and Push Changes Live
+        run: |
+          git config --global user.name "MCR Automated Update"
+          git config --global user.email "actions@github.com"
+          git commit -am "Update live schedule via MCR Admin Form"
+          git push
