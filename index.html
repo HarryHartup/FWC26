@@ -229,16 +229,14 @@
   }
 
   /* STATION PANEL */
-  .station-panel { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+  .station-panel { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:16px; }
   .station-card { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; transition: all 0.3s ease; }
   .station-card-header { display:flex; align-items:center; justify-content:space-between; padding:8px 14px; border-bottom:1px solid var(--border); }
   .station-label { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:13px; letter-spacing:2px; text-transform:uppercase; }
   .stn-1 .station-label { color:#FF6B00; }
   .stn-2 .station-label { color:#5B9EFF; }
-  .stn-3 .station-label { color:#3DE090; }
   .stn-1 { border-top:2px solid #FF6B00; }
   .stn-2 { border-top:2px solid #3370CC; }
-  .stn-3 { border-top:2px solid #009A44; }
   .station-status { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:2px 8px; border-radius:20px; }
   .status-upcoming { background:rgba(245,166,35,0.12); color:var(--fifa-gold); border:1px solid rgba(245,166,35,0.3); }
   .status-live { background:rgba(229,0,17,0.15); color:#FF6B6B; border:1px solid rgba(229,0,17,0.4); animation:livePulse 1.5s ease-in-out infinite; }
@@ -516,7 +514,6 @@
     <div class="station-panel" id="stationPanel">
       <div class="station-card stn-1" id="stnCard1"></div>
       <div class="station-card stn-2" id="stnCard2"></div>
-      <div class="station-card stn-3" id="stnCard3"></div>
     </div>
   </div>
 
@@ -629,10 +626,7 @@
           <thead>
             <tr>
               <th>Venue</th>
-              <th class="sync-col-main sync-col-header-main">PGM</th>
-              <th class="sync-col-backup sync-col-header-backup">Replay</th>
               <th class="sync-col-uni sync-col-header-uni">Player Tracking Data Offset</th>
-              <th class="sync-col-audio sync-col-header-audio">Audio Sync</th>
             </tr>
           </thead>
           <tbody id="syncBody"></tbody>
@@ -1208,10 +1202,7 @@ function buildSync(){
         <span class="sync-venue-name">${v.name}</span>
         <span class="sync-trigram">${v.tgm}</span>
       </td>
-      <td class="sync-col-main">${syncVal(vals[0])}</td>
-      <td class="sync-col-backup">${syncVal(vals[1])}</td>
       <td class="sync-col-uni">${syncVal(vals[2])}</td>
-      <td class="sync-col-audio">${syncVal(vals[3])}</td>
     </tr>`;
   }).join('');
 }
@@ -1344,7 +1335,6 @@ function buildIPs(){
   const stations = [
     { label:'Station 1', dot:'#FF6B00', last:247 },
     { label:'Station 2', dot:'#5B9EFF', last:248 },
-    { label:'Station 3', dot:'#3DE090', last:249 },
   ];
   const stBody = document.getElementById('ipStations');
   stBody.innerHTML = stations.map(s => `
@@ -1748,7 +1738,6 @@ function renderKitPanel(){
 function updateStationPanel(){
   renderStationCard(1, document.getElementById('stnCard1'));
   renderStationCard(2, document.getElementById('stnCard2'));
-  renderStationCard(3, document.getElementById('stnCard3'));
   renderNext3Global();
   renderKitPanel();
 }
