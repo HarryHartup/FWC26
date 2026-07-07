@@ -9,7 +9,7 @@
   body { background: #080B16; color: #F0F2FF; font-family: 'Barlow', sans-serif; font-size: 13px; margin: 0; padding: 24px; }
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
   h2 { margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
-  .status { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; color: #F5A623; margin-left: 20px; letter-spacing: 1px;}
+  .status { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; color: #F5A623; letter-spacing: 1px;}
   
   .config-bar { display: flex; gap: 12px; margin-bottom: 20px; background: #0F1220; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); align-items: center; }
   .config-bar input { background: #161B2E; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 12px; }
@@ -21,6 +21,7 @@
   button:disabled { background: #333; color: #777; cursor: not-allowed; transform: none; }
   
   .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.15); }
 
   .table-wrapper { background: #0F1220; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; overflow-x: auto; display: none; }
   .table-wrapper.active { display: block; }
@@ -49,7 +50,8 @@
 <body>
 
 <div class="header">
-  <div style="display: flex; align-items: center;">
+  <div style="display: flex; align-items: center; gap: 16px;">
+    <button class="btn-secondary" style="padding: 6px 12px; font-size: 14px;" onclick="window.location.href='index.html'">← Back</button>
     <h2>FWC26 Schedule Admin Editor</h2>
     <span class="status" id="statusLabel">🔄 Connecting to live repo data...</span>
   </div>
@@ -179,11 +181,8 @@ function renderSyncInputs() {
     html += `
     <div style="background: #161B2E; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
       <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; margin-bottom: 8px; color: #F5A623; letter-spacing: 1px;">${venue}</div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px;">
-        <input type="text" value="${vals[0]}" onchange="updateSyncVal('${venue}', 0, this.value)" placeholder="PGM" title="PGM">
-        <input type="text" value="${vals[1]}" onchange="updateSyncVal('${venue}', 1, this.value)" placeholder="Rep" title="Replay">
-        <input type="text" value="${vals[2]}" onchange="updateSyncVal('${venue}', 2, this.value)" placeholder="UNI" title="UNI Data">
-        <input type="text" value="${vals[3]}" onchange="updateSyncVal('${venue}', 3, this.value)" placeholder="Aud" title="Audio">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 6px;">
+        <input type="text" value="${vals[2]}" onchange="updateSyncVal('${venue}', 2, this.value)" placeholder="Player Tracking Data Offset" title="Player Tracking Data Offset">
       </div>
     </div>`;
   }
@@ -228,7 +227,7 @@ function renderTable() {
       <td><input type="text" value="${m[9]}" onchange="updateVal(${rowIndex}, 9, this.value)"></td>
       <td>
         <select onchange="updateVal(${rowIndex}, 10, this.value)">
-          ${['','1','2','3'].map(s => `<option value="${s}" ${m[10]===s?'selected':''}>${s}</option>`).join('')}
+          ${['','1','2'].map(s => `<option value="${s}" ${m[10]===s?'selected':''}>${s}</option>`).join('')}
         </select>
       </td>
       <td>
