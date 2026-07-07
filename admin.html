@@ -81,12 +81,13 @@
         <th width="5%">TGM</th>
         <th width="6%">KO IBC</th>
         <th width="10%">Round</th>
-        <th width="12%">Team A</th>
-        <th width="12%">Team B</th>
+        <th width="11%">Team A</th>
+        <th width="11%">Team B</th>
         <th width="5%">KIT</th>
         <th width="5%">GFX</th>
-        <th width="8%">Station</th>
-        <th width="15%">Operator</th>
+        <th width="7%">Station</th>
+        <th width="8%">Op 1</th>
+        <th width="8%">Op 2</th>
       </tr>
     </thead>
     <tbody id="editorBody"></tbody>
@@ -182,7 +183,7 @@ function renderSyncInputs() {
     <div style="background: #161B2E; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
       <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 700; margin-bottom: 8px; color: #F5A623; letter-spacing: 1px;">${venue}</div>
       <div style="display: grid; grid-template-columns: 1fr; gap: 6px;">
-        <input type="text" value="${vals[2]}" onchange="updateSyncVal('${venue}', 2, this.value)" placeholder="Player Tracking Data Offset" title="Player Tracking Data Offset">
+        <input type="text" value="${vals[2] !== undefined ? vals[2] : ''}" onchange="updateSyncVal('${venue}', 2, this.value)" placeholder="Player Tracking Data Offset" title="Player Tracking Data Offset">
       </div>
     </div>`;
   }
@@ -196,8 +197,15 @@ function updateSyncVal(venue, index, val) {
 
 function renderTable() {
   const tbody = document.getElementById('editorBody');
+  const opOptions = (selected) => `
+    <option value="" ${!selected?'selected':''}></option>
+    <option value="Alex Hithersay" ${selected==='Alex Hithersay'?'selected':''}>Alex Hithersay</option>
+    <option value="Jake Jones" ${selected==='Jake Jones'?'selected':''}>Jake Jones</option>
+    <option value="Harry Hartup" ${selected==='Harry Hartup'?'selected':''}>Harry Hartup</option>
+  `;
+
   tbody.innerHTML = matches.map((m, rowIndex) => {
-    while(m.length < 12) m.push(""); 
+    while(m.length < 13) m.push(""); 
     return `
     <tr>
       <td><input type="text" value="${m[0]}" onchange="updateVal(${rowIndex}, 0, this.value)"></td>
@@ -230,14 +238,8 @@ function renderTable() {
           ${['','1','2'].map(s => `<option value="${s}" ${m[10]===s?'selected':''}>${s}</option>`).join('')}
         </select>
       </td>
-      <td>
-        <select onchange="updateVal(${rowIndex}, 11, this.value)">
-          <option value="" ${!m[11]?'selected':''}></option>
-          <option value="Alex Hithersay" ${m[11]==='Alex Hithersay'?'selected':''}>Alex Hithersay</option>
-          <option value="Jake Jones" ${m[11]==='Jake Jones'?'selected':''}>Jake Jones</option>
-          <option value="Harry Hartup" ${m[11]==='Harry Hartup'?'selected':''}>Harry Hartup</option>
-        </select>
-      </td>
+      <td><select onchange="updateVal(${rowIndex}, 11, this.value)">${opOptions(m[11])}</select></td>
+      <td><select onchange="updateVal(${rowIndex}, 12, this.value)">${opOptions(m[12])}</select></td>
     </tr>
   `}).join('');
 }
