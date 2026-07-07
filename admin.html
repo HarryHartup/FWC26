@@ -9,7 +9,7 @@
   body { background: #080B16; color: #F0F2FF; font-family: 'Barlow', sans-serif; font-size: 13px; margin: 0; padding: 24px; }
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
   h2 { margin: 0; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
-  .status { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; color: #F5A623; letter-spacing: 1px;}
+  .status { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; color: #F5A623; letter-spacing: 1px; margin-left: 20px;}
   
   .config-bar { display: flex; gap: 12px; margin-bottom: 20px; background: #0F1220; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); align-items: center; }
   .config-bar input { background: #161B2E; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 12px; border-radius: 4px; font-size: 12px; }
@@ -50,12 +50,12 @@
 <body>
 
 <div class="header">
-  <div style="display: flex; align-items: center; gap: 16px;">
-    <button class="btn-secondary" style="padding: 6px 12px; font-size: 14px;" onclick="window.location.href='index.html'">← Back</button>
+  <div style="display: flex; align-items: center;">
     <h2>FWC26 Schedule Admin Editor</h2>
     <span class="status" id="statusLabel">🔄 Connecting to live repo data...</span>
   </div>
   <div class="deploy-controls">
+    <button class="btn-secondary" onclick="window.location.href='index.html'">← Back</button>
     <button id="exportBtn" onclick="confirmDeploy()" disabled>🚀 Deploy Live to GitHub Actions</button>
   </div>
 </div>
