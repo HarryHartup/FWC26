@@ -327,49 +327,18 @@
   /* SYNC VALUES TAB */
   .sync-panel { background:var(--dark2); border:1px solid var(--border); border-radius:8px; overflow:hidden; }
   .sync-header { padding:14px 20px; border-bottom:1px solid var(--border); background:var(--panel); display:flex; align-items:center; gap:12px; }
-  .sync-table { width:100%; border-collapse:collapse; font-size:13px; }
-  .sync-table thead th {
-    background:#0C1022; color:var(--muted);
-    font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700;
-    letter-spacing:2px; text-transform:uppercase;
-    padding:10px 20px; text-align:left;
-    border-bottom:2px solid var(--border);
-  }
-  .sync-table th:first-child { min-width:200px; }
-  .sync-table th:not(:first-child) { min-width:180px; }
-  .sync-table tbody td {
-    padding:11px 20px;
-    border-bottom:1px solid rgba(255,255,255,0.04);
-    vertical-align:middle;
-  }
-  .sync-table tbody tr:last-child td { border-bottom:none; }
-  .sync-table tbody tr:hover td { background:rgba(255,255,255,0.025); }
-  .sync-venue-name {
-    font-family:'Barlow Condensed',sans-serif;
-    font-weight:700; font-size:16px; color:var(--text);
-    letter-spacing:0.5px;
-  }
-  .sync-trigram {
-    font-family:'Barlow Condensed',sans-serif; font-weight:700;
-    font-size:11px; letter-spacing:1px; color:#fff;
-    background:var(--panel); padding:2px 7px; border-radius:3px;
-    border:1px solid var(--border); margin-left:8px;
-    vertical-align:middle;
-  }
-  .sync-value-missing {
-    color:var(--muted);
-    font-style:italic;
-    font-size:12px;
-    font-family:'Barlow',sans-serif;
-  }
-  .sync-col-main  { border-left:2px solid rgba(255,107,0,0.3); }
-  .sync-col-backup { border-left:2px solid rgba(91,158,255,0.3); }
-  .sync-col-uni   { border-left:2px solid rgba(61,224,144,0.3); }
-  .sync-col-audio { border-left:2px solid rgba(180,100,255,0.3); }
-  .sync-col-header-main   { color:#FF6B00 !important; }
-  .sync-col-header-backup { color:#5B9EFF !important; }
-  .sync-col-header-uni    { color:#3DE090 !important; }
-  .sync-col-header-audio  { color:#C97EFF !important; }
+  
+  .sync-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; padding: 20px; }
+  .sync-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  
+  .sync-card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .sync-venue-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: 0.5px; line-height: 1.1; }
+  .sync-trigram { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: 1px; color: #fff; background: var(--dark); padding: 3px 7px; border-radius: 3px; border: 1px solid var(--border); flex-shrink: 0; }
+  
+  .sync-value-container { display: flex; flex-direction: column; gap: 2px; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 12px; }
+  .sync-value-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .sync-value { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 28px; color: #3DE090; display: block; }
+  .sync-value-missing { color: var(--muted); font-style: italic; font-size: 14px; font-weight: normal; padding: 6px 0; display: block; }
 
   .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
   .empty-state .big { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:rgba(255,255,255,0.05); margin-bottom:12px; }
@@ -618,20 +587,10 @@
   <div id="syncTab" class="tab-content">
     <div class="sync-panel">
       <div class="sync-header">
-        <div class="table-title">Sync Values</div>
+        <div class="table-title">Player Tracking Data Offsets</div>
         <div class="record-count">16 venues</div>
       </div>
-      <div style="overflow-x:auto;">
-        <table class="sync-table">
-          <thead>
-            <tr>
-              <th>Venue</th>
-              <th class="sync-col-uni sync-col-header-uni">Player Tracking Data Offset</th>
-            </tr>
-          </thead>
-          <tbody id="syncBody"></tbody>
-        </table>
-      </div>
+      <div class="sync-grid" id="syncBody"></div>
     </div>
   </div>
 
@@ -1186,24 +1145,30 @@ function buildColours(){
 }
 
 function buildSync(){
-  const tbody = document.getElementById('syncBody');
-  const missing = `<span class="sync-value-missing">missing</span>`;
+  const container = document.getElementById('syncBody');
+  const missing = `<span class="sync-value-missing">Missing</span>`;
   
   function syncVal(v){
     if (v === "" || v === null || v === undefined) return missing;
-    return `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;color:var(--text);">${v}</span>`;
+    return `<span class="sync-value">${v}</span>`;
   }
   
-  tbody.innerHTML = VENUES_SYNC.map(v => {
+  container.innerHTML = VENUES_SYNC.map(v => {
+    // Index 2 is the Player Tracking Data Offset
     const vals = syncValues[v.name] || ["", "", "", ""];
     
-    return `<tr>
-      <td>
-        <span class="sync-venue-name">${v.name}</span>
-        <span class="sync-trigram">${v.tgm}</span>
-      </td>
-      <td class="sync-col-uni">${syncVal(vals[2])}</td>
-    </tr>`;
+    return `
+      <div class="sync-card">
+        <div class="sync-card-header">
+          <span class="sync-venue-name">${v.name}</span>
+          <span class="sync-trigram">${v.tgm}</span>
+        </div>
+        <div class="sync-value-container">
+          <span class="sync-value-label">Offset Value</span>
+          ${syncVal(vals[2])}
+        </div>
+      </div>
+    `;
   }).join('');
 }
 
