@@ -127,7 +127,7 @@
   .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); background:#1a2540; border:1px solid var(--border); border-left:3px solid var(--fifa-gold); color:var(--text); padding:10px 20px; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:600; letter-spacing:1px; opacity:0; transition:all 0.25s; z-index:9999; white-space:nowrap; pointer-events:none; }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-  .op-pill { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.5px; padding:3px 10px; border-radius:20px; white-space:nowrap; }
+  .op-pill { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:12px; letter-spacing:0.5px; padding:3px 10px; border-radius:20px; white-space:nowrap; display:inline-block; }
   .op-alex  { background:rgba(0,154,68,0.18);  color:#4DE09A; border:1px solid rgba(0,154,68,0.35); }
   .op-jake  { background:rgba(0,61,165,0.22);  color:#7EB8FF; border:1px solid rgba(0,61,165,0.4); }
   .op-harry { background:rgba(123,45,139,0.22);color:#CC88E8; border:1px solid rgba(123,45,139,0.4); }
@@ -266,7 +266,7 @@
   .countdown-unit { font-size:12px; letter-spacing:1.5px; color:var(--muted); text-transform:uppercase; }
   .countdown-sep { font-size:24px; color:var(--muted); line-height:1; font-weight:900; }
   .countdown-live { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:26px; color:#FF6B6B; letter-spacing:2px; animation:livePulse 1.5s ease-in-out infinite; }
-  .station-op { margin-top:10px; display:flex; align-items:center; gap:6px; }
+  .station-op { margin-top:10px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
   .station-idle-msg { padding:20px 14px; text-align:center; font-family:'Barlow Condensed',sans-serif; font-size:14px; color:var(--muted); letter-spacing:1px; }
   .station-next-list { border-top:1px solid var(--border); padding:8px 14px 10px; }
   .station-next-title { font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
@@ -319,6 +319,7 @@
     font-family: 'Barlow Condensed', sans-serif;
     display: flex; flex-direction: column; gap: 2px; margin-top: 2px;
   }
+  .kit-cell-ops { display:flex; gap:4px; margin-top:2px; flex-wrap:wrap; }
   .kit-cell-none {
     font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
     color: rgba(255,255,255,0.15); font-style: italic; padding-top: 4px;
@@ -329,7 +330,8 @@
   .sync-header { padding:14px 20px; border-bottom:1px solid var(--border); background:var(--panel); display:flex; align-items:center; gap:12px; }
   
   .sync-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; padding: 20px; }
-  .sync-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .sync-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; transition: all 0.2s; }
+  .sync-card:hover { border-color: rgba(61,224,144,0.4); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   
   .sync-card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .sync-venue-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: 0.5px; line-height: 1.1; }
@@ -554,7 +556,7 @@
             <th>Team B <span style="color:rgba(255,255,255,0.25);font-weight:400">(Away)</span></th>
             <th>KIT</th>
             <th>GFX/DAZN</th>
-            <th>HawkVR Op</th>
+            <th>HawkVR Ops</th>
             <th>Station</th>
             <th>Sync Time</th>
           </tr>
@@ -713,102 +715,22 @@ const VENUES_SYNC = [
 ];
 
 const syncValues={
-  "Atlanta": [
-    0,
-    0,
-    240,
-    0
-  ],
-  "Boston": [
-    0,
-    0,
-    208,
-    0
-  ],
-  "Dallas": [
-    0,
-    0,
-    189,
-    0
-  ],
-  "Guadalajara": [
-    19,
-    16,
-    192,
-    19
-  ],
-  "Houston": [
-    0,
-    0,
-    228,
-    0
-  ],
-  "Kansas City": [
-    0,
-    0,
-    223,
-    0
-  ],
-  "Los Angeles": [
-    0,
-    0,
-    183,
-    0
-  ],
-  "Mexico City": [
-    0,
-    0,
-    205,
-    0
-  ],
-  "Miami": [
-    0,
-    0,
-    234,
-    0
-  ],
-  "Monterrey": [
-    0,
-    0,
-    198,
-    0
-  ],
-  "New York/New Jersey": [
-    0,
-    0,
-    170,
-    0
-  ],
-  "Philadelphia": [
-    0,
-    0,
-    232,
-    0
-  ],
-  "San Francisco Bay Area": [
-    0,
-    0,
-    210,
-    0
-  ],
-  "Seattle": [
-    0,
-    0,
-    210,
-    0
-  ],
-  "Toronto": [
-    0,
-    0,
-    190,
-    0
-  ],
-  "Vancouver": [
-    0,
-    0,
-    179,
-    0
-  ]
+  "Atlanta": [0,0,240,0],
+  "Boston": [0,0,208,0],
+  "Dallas": [0,0,189,0],
+  "Guadalajara": [19,16,192,19],
+  "Houston": [0,0,228,0],
+  "Kansas City": [0,0,223,0],
+  "Los Angeles": [0,0,183,0],
+  "Mexico City": [0,0,205,0],
+  "Miami": [0,0,234,0],
+  "Monterrey": [0,0,198,0],
+  "New York/New Jersey": [0,0,170,0],
+  "Philadelphia": [0,0,232,0],
+  "San Francisco Bay Area": [0,0,210,0],
+  "Seattle": [0,0,210,0],
+  "Toronto": [0,0,190,0],
+  "Vancouver": [0,0,179,0]
 };
 
 function luminance(hex){
@@ -878,6 +800,13 @@ function roundBadge(r){
 }
 
 function val(v){ if(!v||v.trim()==='') return '<span class="dash">-</span>'; return v; }
+
+function opCell(name){
+  if(!name) return '';
+  const first=name.split(' ')[0];
+  const cls=first==='Alex'?'op-alex':first==='Jake'?'op-jake':'op-harry';
+  return `<span class="op-pill ${cls}" title="${name}">${first}</span>`;
+}
 
 const matches=[
   ["M1","11/06/2026","Mexico City","CDMX","14:00","Group Stage","Mexico","South Africa","A","A","1","Alex Hithersay"],
@@ -986,15 +915,9 @@ const matches=[
   ["M104","19/07/2026","New York/New Jersey","NYNJ","14:00","Final","TBC","TBC","A","A","1","Alex Hithersay"],
 ];
 
-function opCell(name){
-  if(!name) return '<span class="dash">-</span>';
-  const first=name.split(' ')[0];
-  const cls=first==='Alex'?'op-alex':first==='Jake'?'op-jake':'op-harry';
-  return `<span class="op-pill ${cls}" title="${name}">${first}</span>`;
-}
 function stationCell(n){
   if(!n) return '<span class="dash">-</span>';
-  const cols={1:'#FF6B00',2:'#003DA5',3:'#009A44'};
+  const cols={1:'#FF6B00',2:'#003DA5'};
   const c=cols[n]||'#888';
   return `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:${c};">${n}</span>`;
 }
@@ -1081,9 +1004,11 @@ function buildTable(data){
   document.getElementById('recordCount').textContent=data.length+' matches';
   document.getElementById('showingCount').textContent=data.length;
   tbody.innerHTML=data.map((m)=>{
-    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator]=m;
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2]=m;
     const koLocal = koIBC && koIBC !== '-' ? localKOFromIBC(venue, koIBC) : '-';
     const done = isMatchCompleted(m);
+    const opHtml = opCell(op1) + (op2 ? ' ' + opCell(op2) : '');
+    
     return `<tr class="${done?'completed-row':''}">
       <td><span class="match-num">${num}</span></td>
       <td><span class="date-cell">${val(date)}</span></td>
@@ -1096,7 +1021,7 @@ function buildTable(data){
       <td>${teamChip(teamB,false)}</td>
       <td><span class="contrib-cell">${kit||'-'}</span></td>
       <td><span class="contrib-cell">${gfx||'-'}</span></td>
-      <td>${opCell(operator)}</td>
+      <td>${opHtml || '<span class="dash">-</span>'}</td>
       <td>${stationCell(station)}</td>
       <td><span class="time-cell">${syncTimeFromIBC(koIBC)}</span></td>
     </tr>`;
@@ -1196,12 +1121,12 @@ function applyFilters(){
   localStorage.setItem('selectedOp', op);
 
   filteredData=matchData.filter((m)=>{
-    const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,operator]=m;
+    const [num,dt,vn,tgm,koIBC,rd,tA,tB,kit,gfx,station,op1,op2]=m;
     if(hideCompleted && isMatchCompleted(m)) return false;
     if(round&&rd!==round)return false;
     if(venue&&vn!==venue)return false;
     if(date&&dt!==date)return false;
-    if(op&&operator!==op)return false;
+    if(op && op1!==op && op2!==op) return false;
     if(search){const s=[num,dt,vn,tgm,koIBC,rd,tA,tB].join(' ').toLowerCase();if(!s.includes(search))return false;}
     return true;
   });
@@ -1492,7 +1417,7 @@ function renderStationCard(stn, cardEl){
   }
 
   const {m, state, koMs} = active;
-  const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+  const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2] = m;
   const localTime = localKOFromIBC(venue, koIBC);
   
   let statusCls = 'status-upcoming';
@@ -1508,8 +1433,13 @@ function renderStationCard(stn, cardEl){
     cardEl.classList.add('card-warning'); 
   }
 
-  const opFirst = operator ? operator.split(' ')[0] : '';
-  const opCls = opFirst==='Alex'?'op-alex':opFirst==='Jake'?'op-jake':opFirst?'op-harry':'';
+  const getOpPill = (name) => {
+    if(!name) return '';
+    const f = name.split(' ')[0];
+    const c = f==='Alex'?'op-alex':f==='Jake'?'op-jake':f?'op-harry':'';
+    return `<span class="op-pill ${c}">${name}</span>`;
+  };
+  const opHtml = getOpPill(op1) + (op2 ? ' ' + getOpPill(op2) : '');
 
   const allStn = matchData.filter(mx => String(mx[10]) === String(stn));
   const currentIdx = allStn.indexOf(m);
@@ -1559,7 +1489,7 @@ function renderStationCard(stn, cardEl){
         </div>
       </div>
       ${renderCountdown(koMs, nowMs, state)}
-      ${operator ? `<div class="station-op"><span class="op-pill ${opCls}">${operator}</span></div>` : ''}
+      ${opHtml ? `<div class="station-op">${opHtml}</div>` : ''}
     </div>
     ${nextHtml}`;
 }
@@ -1572,7 +1502,7 @@ function renderNext3Global(){
   const preMatchMs = 15 * 60 * 1000;
 
   for(const m of matchData){
-    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2] = m;
     if(!date || !koIBC) continue;
     const koMs = parseIBCDate(date, koIBC);
     const endMs = koMs + 2*60*60*1000;
@@ -1590,7 +1520,7 @@ function renderNext3Global(){
   }
 
   container.innerHTML = top3.map(({m, koMs, state}) => {
-    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2] = m;
     const stnNum = parseInt(station);
     const dotColor = stnColors[stnNum] || '#E8E060';
     const stnLabel = station ? `Stn ${station}` : `<span class="round-badge round-svm" style="font-size:10px;padding:2px 6px;">SVM</span>`;
@@ -1600,6 +1530,7 @@ function renderNext3Global(){
     const totalMins = Math.floor(diff/60000);
     const h = Math.floor(totalMins/60);
     const min = totalMins % 60;
+    
     let timeStr;
     if(isLive){
       timeStr = `<span style="color:#FF6B6B;font-weight:700;animation:livePulse 1.5s ease-in-out infinite;display:inline-block;">● LIVE</span>`;
@@ -1611,9 +1542,15 @@ function renderNext3Global(){
     } else {
       timeStr = `in ${min}m`;
     }
-    const opFirst = operator ? operator.split(' ')[0] : '';
-    const opCls3 = opFirst==='Alex'?'op-alex':opFirst==='Jake'?'op-jake':opFirst?'op-harry':'';
-    const opHtml = opFirst ? `<span class="op-pill ${opCls3}" style="font-size:11px;padding:2px 8px;">${opFirst}</span>` : '';
+
+    const getOpPill = (name) => {
+      if(!name) return '';
+      const f = name.split(' ')[0];
+      const c = f==='Alex'?'op-alex':f==='Jake'?'op-jake':f?'op-harry':'';
+      return `<span class="op-pill ${c}" style="font-size:11px;padding:2px 8px;">${f}</span>`;
+    };
+    const opHtml = getOpPill(op1) + (op2 ? ' ' + getOpPill(op2) : '');
+
     return `<div class="next3-item">
       <div class="next3-item-top">
         <span class="next3-match-num">${num}</span>
@@ -1643,7 +1580,7 @@ function renderKitPanel(){
   container.innerHTML = kitLetters.map(letter => {
     let found = null;
     for(const m of matchData){
-      const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
+      const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2] = m;
       if(kit !== letter) continue;
       if(!date || !koIBC) continue;
       const koMs = parseIBCDate(date, koIBC);
@@ -1664,14 +1601,13 @@ function renderKitPanel(){
     }
 
     const {m, koMs, state} = found;
-    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,operator] = m;
-    const opFirst = operator ? operator.split(' ')[0] : '';
-    const opCls = opFirst==='Alex'?'op-alex':opFirst==='Jake'?'op-jake':opFirst?'op-harry':'';
-
+    const [num,date,venue,tgm,koIBC,round,teamA,teamB,kit,gfx,station,op1,op2] = m;
+    
     const diff = Math.max(0, koMs - nowMs);
     const totalMins = Math.floor(diff/60000);
     const h = Math.floor(totalMins/60);
     const min = totalMins % 60;
+    
     let timeStr;
     if(state==='live'){
       timeStr = `<span style="color:#FF6B6B;font-weight:700;">● LIVE</span>`;
@@ -1685,6 +1621,14 @@ function renderKitPanel(){
     }
 
     const teamLines = (teamA==='TBC'&&teamB==='TBC') ? 'TBC' : `${teamA} vs ${teamB}`;
+    
+    const getOpPill = (name) => {
+      if(!name) return '';
+      const f = name.split(' ')[0];
+      const c = f==='Alex'?'op-alex':f==='Jake'?'op-jake':f?'op-harry':'';
+      return `<span class="op-pill ${c}" style="font-size:10px;padding:2px 7px;width:fit-content;">${f}</span>`;
+    };
+    const opHtml = getOpPill(op1) + (op2 ? getOpPill(op2) : '');
 
     return `<div class="kit-cell">
       <div class="kit-cell-letter">${letter}</div>
@@ -1694,7 +1638,7 @@ function renderKitPanel(){
       <div class="kit-cell-meta">
         <span>${koIBC} IBC · ${timeStr}</span>
         <span>${venue}</span>
-        ${opFirst ? `<span class="op-pill ${opCls}" style="font-size:10px;padding:2px 7px;margin-top:2px;width:fit-content;">${opFirst}</span>` : ''}
+        ${opHtml ? `<div class="kit-cell-ops">${opHtml}</div>` : ''}
       </div>
     </div>`;
   }).join('');
